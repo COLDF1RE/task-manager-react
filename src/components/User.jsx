@@ -1,16 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {pages} from "../router/pages";
 
 const User = ({user}) => {
-    return (
-        // <div className={'user'}>
-            <Link to={'/PageUserItem'} className={'user'}>{user}</Link>
-            // <Link to={} className={'user__name'}>Малыш Грут</Link>
-            // <Link to={} className={'user__name'}>Шерлок Холмс</Link>
-            // <Link to={} className={'user__name'}>Доктор Ватсон</Link>
-            // <Link to={} className={'user__name'}>Дональд Дак</Link>
-        // </div>
 
+    return (
+            <Link to={pages.users + '/' + user.id} className={'user'}>{user.username}</Link>
     );
 };
 

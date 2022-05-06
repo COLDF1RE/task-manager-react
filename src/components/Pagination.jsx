@@ -14,20 +14,20 @@ const Pagination = ({
         <div className="pagination">
             <div className="pagination__nav">
                 <button
-                    className={`pagination__nav-prev ${page === 1 && "pagination__nav-prev--disabled"}`}
+                    className={`pagination__nav-prev button ${page === 1 ? "button--disabled" : "button--default"}`}
                     onClick={prevPage}
                 >Назад
                 </button>
                 {[...Array(totalPages).keys()].map((el) => (
                     <button
-                        className={`page ${page === el + 1 ? "pagination__nav-page pagination__nav-page--active" : "pagination__nav-page"}`}
+                        className={`pagination__nav-page button ${page === el + 1 ? "button--primary" : "button--default"}`}
                         onClick={() => setPage(el + 1)}
                         key={el}
                     >{el + 1}
                     </button>
                 ))}
                 <button
-                    className={`pagination__nav-next ${page === totalPages && "pagination__nav-next--disabled"}`}
+                    className={`pagination__nav-next button ${page === totalPages ? "button--disabled" : "button--default"}`}
                     onClick={nextPage}
                 >Вперед
                 </button>

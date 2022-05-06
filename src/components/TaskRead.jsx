@@ -36,7 +36,7 @@ const TaskRead = ({tasks}) => {
                     <div className="task-open__info-title">Затрачено времени</div>
                     <div className="task-open__info-text">0 часов 0 минут</div>
 
-                    <button className="task-open__info-bnt">Сделать запись о работе</button>
+                    <button className="task-open__info-bnt button button--primary">Сделать запись о работе</button>
                 </div>
 
                 <div className="task-open__description">
@@ -47,7 +47,7 @@ const TaskRead = ({tasks}) => {
                 <div className="task-open__comments">
                     <div className="task-open__comments-title">{`Комментарии(${currentTask.comments.length})`}</div>
                     <textarea name="" id="" cols="30" rows="10" className="task-open__comments-textarea"></textarea>
-                    <button className="task-open__comments-btn">Добавить комментарий</button>
+                    <button className="task-open__comments-btn button button--success">Добавить комментарий</button>
 
                     {/*<div className="task-open__comments-item">*/}
 

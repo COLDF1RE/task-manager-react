@@ -1,13 +1,13 @@
 export const pages = {
     login: '/',
     tasks: '/tasks',
-    // taskId: '/Tasks/:id',
-    // taskEdit: '/Tasks/edit/:id',
-    // taskAdd: '/Tasks/add/:id',
+    tasksId: '/tasks/:id?',
+    taskEdit: '/tasks/edit/:id',
+    taskAdd: '/tasks/add',
     //
     users: '/users',
-    // userId: '/Users/:id',
-    // userEdit: '/Users/edit/:id',
+    usersId: '/users/:id?',
+    // userEdit: '/users/edit/:id',
 
     // ADD: '/event/',
     // EVENT: '/event/:id?',

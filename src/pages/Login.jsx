@@ -1,14 +1,17 @@
 import React from 'react';
 import Header from "../components/Header";
 import LoginForm from "../components/LoginForm";
+import {getFilteredTasks} from "../API/api";
 
-const PageLogin = () => {
+const Login = () => {
+
     return (
         <>
             <Header/>
+            {/*<HeaderLite/>*/}
             <LoginForm/>
         </>
     );
 };
 
-export default PageLogin;
+export default Login;

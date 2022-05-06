@@ -17,8 +17,8 @@ const Modal = () => {
                         <textarea className="modal__window-textarea"></textarea>
                     </div>
                     <div className="modal__window-buttons">
-                        <button className="modal__window-submit">Добавить</button>
-                        <button className="modal__window-cancel">Отмена</button>
+                        <button className="modal__window-submit button button--primary">Добавить</button>
+                        <button className="modal__window-cancel button button-default">Отмена</button>
                     </div>
                 </div>
             </div>

@@ -14,17 +14,17 @@ const Board = ({tasks}) => {
 
     /////////////////
     const users = [
-        '1 Евгений Онегин',
-        '2 Евгений Онегин',
-        '3 Евгений Онегин',
-        '4 Евгений Онегин',
-        '6 Евгений Онегин',
-        '7 Евгений Онегин',
-        '8 Евгений Онегин',
-        '9 Евгений Онегин',
-        '10 Евгений Онегин',
-        '11 Евгений Онегин',
-        '12 Евгений Онегин',
+        {id: 1, username: '1 Евгений Онегин'},
+        {id: 2, username: '2 Евгений Онегин'},
+        {id: 3, username: '3 Евгений Онегин'},
+        {id: 4, username: '4 Евгений Онегин'},
+        {id: 5, username: '5 Евгений Онегин'},
+        {id: 6, username: '6 Евгений Онегин'},
+        {id: 7, username: '7 Евгений Онегин'},
+        {id: 8, username: '8 Евгений Онегин'},
+        {id: 9, username: '9 Евгений Онегин'},
+        {id: 10, username: '10 Евгений Онегин'},
+        {id: 11, username: '11 Евгений Онегин'},
     ]
 
 
@@ -57,35 +57,34 @@ const Board = ({tasks}) => {
 
             {/* ЗАДАЧИ */}
             {/* Главная Список Задач  /tasks  */}
-            {pathname === pages.tasks &&
-            <>
-                <TaskFilter/>
-                <div className="tasks-wrapper">
-                    {/*///////////////////*/}
-                    {tasks.length !== 0
-                        ? tasks.slice(firstContentIndex, lastContentIndex).map(task => <Task task={task}
-                                                                                             key={task.id}/>)
-                        : <NoTasks/>
-                    }
-                </div>
-                <Pagination
-                    nextPage={nextPage}
-                    prevPage={prevPage}
-                    tasksLength={tasks.length}
-                    firstContentIndex={firstContentIndex}
-                    lastContentIndex={lastContentIndex}
-                    totalPages={totalPages}
-                    page={page}
-                    setPage={setPage}
-                />
-            </>
-            }
+            {/*{pathname === pages.tasks &&*/}
+            {/*<>*/}
+            {/*    <TaskFilter/>*/}
+            {/*    <div className="tasks-wrapper">*/}
+            {/*        {tasks.length !== 0*/}
+            {/*            ? tasks.slice(firstContentIndex, lastContentIndex).map(task => <Task task={task}*/}
+            {/*                                                                                 key={task.id}/>)*/}
+            {/*            : <NoTasks/>*/}
+            {/*        }*/}
+            {/*    </div>*/}
+            {/*    <Pagination*/}
+            {/*        nextPage={nextPage}*/}
+            {/*        prevPage={prevPage}*/}
+            {/*        tasksLength={tasks.length}*/}
+            {/*        firstContentIndex={firstContentIndex}*/}
+            {/*        lastContentIndex={lastContentIndex}*/}
+            {/*        totalPages={totalPages}*/}
+            {/*        page={page}*/}
+            {/*        setPage={setPage}*/}
+            {/*    />*/}
+            {/*</>*/}
+            {/*}*/}
 
             {/* Открытая задача по id  /tasks/:id */}
             {/*{pathname === pages.taskId &&*/}
-            {id &&
-            <TaskRead tasks={tasks}/>
-            }
+            {/*{id &&*/}
+            {/*<TaskRead tasks={tasks}/>*/}
+            {/*}*/}
 
             {/* Открытая задача по id Редактирование tasks/:id/edit */}
             {/*{pathname === pages.tasksEdit &&*/}
@@ -105,8 +104,7 @@ const Board = ({tasks}) => {
                 <div className="tasks-wrapper">
 
                     {users.length !== 0
-                        ////////нужен кей
-                        ? users.slice(firstContentIndex, lastContentIndex).map(user => <User user={user}/>)
+                        ? users.slice(firstContentIndex, lastContentIndex).map(user => <User user={user} key={user.id}/>)
 
                         : <NoTasks/>
                     }
