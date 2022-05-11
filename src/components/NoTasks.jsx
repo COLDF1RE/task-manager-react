@@ -2,8 +2,8 @@ import React from 'react';
 
 const NoTasks = () => {
     return (
-        <div>
-            <h1 className=""> Нет Задач</h1>
+        <div className="no-tasks">
+            <div className="no-tasks__title"> Список пуст =(</div>
         </div>
     );
 };

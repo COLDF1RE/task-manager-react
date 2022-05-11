@@ -15,7 +15,7 @@ const UserList = ({users}) => {
         setPage,
         totalPages,
     } = usePagination({
-        contentPerPage: 8,
+        contentPerPage: 10,
         count: users.length,
     });
 

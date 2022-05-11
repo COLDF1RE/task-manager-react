@@ -2,19 +2,15 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {pages} from "../router/pages";
 import Menu from "./Menu";
+import {events} from "../store/store";
 
-const Task = ({task}) => {
+const Task = ({task, username}) => {
 
-    const {id, type, title, user, status, rank} = task
-
-
-
+    const {id, type, title, userId, status, rank} = task
 
 
-
-
-
-
+    /////////////////////////// Бургер меню /////////////////////////////
+    //
     // function taskMenuOpen(event) {
     //     const menuItems = document.querySelectorAll('.task__btn-img')
     //     for ( const menuItem of menuItems) {
@@ -25,16 +21,14 @@ const Task = ({task}) => {
     //     item.classList.toggle('task__menu--open')
     //     console.log(item)
     // }
-
-
+    //
     // function taskMenuOpen2 (event) {
     //     if (event.target.className != 'task__btn-img') return
     //
     //     let menu = event.target
     //     menu.classList.toggle('task__menu--open')
     // }
-
-
+    //
     const [menuActive, setMenuActive] = useState(false)
     const menuItems = [
         {id: 1, value: 'Редактировать', to: pages.tasks},
@@ -42,7 +36,11 @@ const Task = ({task}) => {
         {id: 3, value: 'На тестирование', to: pages.login},
         {id: 4, value: 'Переоткрывать', to: pages.login},
     ]
+    //
+    ////////////////////////////////////////////////////////////////////
 
+    // const currentUser = events.users.find(user => user.id === id) || []
+    // console.log(currentUser)
 
     return (
         <div className="task">
@@ -50,12 +48,12 @@ const Task = ({task}) => {
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z"
-                        fill={type}/>
+                        fill={type === 'task' ? '#00D1FF' : '#EB4F4F'}/>
                     <circle cx="12" cy="12" r="6" fill="white"/>
                 </svg>
             </div>
-            <Link to={pages.tasks + '/' + id} className="task__title">{title}</Link>
-            <div className="task__username">{user}</div>
+            <Link to={pages.tasks + '/' + id} className="task__title">{title} </Link>
+            <div className="task__username">{username}</div>
             <div className="task__status status">{status}</div>
             <div className="task__priority">
                 <div className="task__priority-icon">
@@ -65,7 +63,6 @@ const Task = ({task}) => {
                 </div>
                 <p className="task__priority-text">{rank}</p>
             </div>
-            {/*<div className="task__btn" onClick={taskMenuOpen}>*/}
             <div className="task__btn">
 
                 {/*<svg className="task__btn-active" width="20" height="20" viewBox="0 0 20 20" fill="none"*/}
@@ -86,12 +83,6 @@ const Task = ({task}) => {
 
                 <button className="task__btn-img" onClick={() => setMenuActive(!menuActive)}>ryjgrf</button>
 
-                {/*<div className="task__menu">*/}
-                {/*    <div className="task__menu-item">Редактировать</div>*/}
-                {/*    <div className="task__menu-item">Удалить</div>*/}
-                {/*    <div className="task__menu-item">На тестирование</div>*/}
-                {/*    <div className="task__menu-item">Переоткрывать</div>*/}
-                {/*</div>*/}
                 <Menu menuActive={menuActive} setMenuActive={setMenuActive} menuItems={menuItems} />
 
             </div>

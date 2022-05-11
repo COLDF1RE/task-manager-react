@@ -18,11 +18,13 @@ function App() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path={ pages.login }   exact render={(props) => <Login tasks={ mocksTasks } {...props} />}/>
-                <Route path={ pages.tasksId } exact render={(props) => <Tasks tasks={ mocksTasks } {...props} />}/>
-                <Route path={ pages.usersId } exact render={(props) => <Users users={ mocksUsers } {...props} />}/>
-
+                <Route path={ pages.login }   exact component={ Login } />
+                <Route path={ pages.tasksId } exact component={ Tasks } />
+                <Route path={ pages.usersId } exact component={ Users } />
                 <Route component={ Error404 } />
+
+                {/*<Route path={ pages.tasksId } exact render={(props) => <Tasks tasks={ mocksTasks } {...props} />}/>*/}
+                {/*<Route path={ pages.usersId } exact render={(props) => <Users users={ mocksUsers } {...props} />}/>*/}
             </Switch>
         </BrowserRouter>
     );

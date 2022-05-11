@@ -237,7 +237,7 @@ textarea {
 
 .board {
   max-width: 1280px;
-  height: 642px;
+  height: 764px;
 
   margin: 0 auto;
   background-color: #ffffff;
@@ -501,9 +501,9 @@ textarea {
 
   padding: 20px 0;
 
-  height: 642px;
+  height: 100%;
 
-  box-shadow: 0 0 5px 3px #B5B5B5;
+  //box-shadow: 0 0 5px 3px #B5B5B5;
   border-radius: 5px;
 
   &__info {
@@ -595,7 +595,7 @@ textarea {
 
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(181, 181, 181, 0.35);
@@ -606,6 +606,10 @@ textarea {
   justify-content: center;
   align-items: center;
 
+  transform: scale(0);
+  &--active {
+    transform: scale(1);
+  }
   &__window {
     background-color: #ffffff;
 
@@ -782,15 +786,21 @@ textarea {
 
     height: 602px;
 
-    &-img {
+    &-img-block {
       height: 186px;
       width: 186px;
       border-radius: 107px;
+      border: 1px solid red;
       background-color: #7B61FF;
 
       margin-bottom: 20px;
-    }
+      overflow:hidden;
 
+    }
+    &-img{
+      object-fit: cover;
+      height: 100%;
+    }
     &-title {
       color: #CCCCCC;
       margin-bottom: 5px;

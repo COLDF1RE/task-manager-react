@@ -4,18 +4,22 @@ import {pages} from "../router/pages";
 
 
 const LoginForm = () => {
+
+
+
     return (
         <>
-            <div className="login">
-                {/*СДЕЛАТЬ ФОРМ*/}
+            <form className="login">
                 <div className="login__title">Авторизация</div>
-                <div className="login__input-title">Логин</div>
-                <input type="text" className="login__input"/>
-                <div className="login__input-title">Логин</div>
+
+                <label className="login__input-title">Логин</label>
                 <input type="text" className="login__input"/>
 
+                <label className="login__input-title">Логин</label>
+                <input type="password" className="login__input"/>
+
                 <Link to={pages.tasks} className="login__btn button button--success">Вход</Link>
-            </div>
+            </form>
         </>
     );
 };
