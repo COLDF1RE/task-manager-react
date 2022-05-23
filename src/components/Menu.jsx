@@ -1,15 +1,16 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, {useRef} from 'react';
+import useOnClickOutside from "../hooks/useOnClickOutside";
 
-const Menu = ({menuItems, menuActive, setMenuActive}) => {
+const Menu = ({menuActive, setMenuActive, children, clickInsideClosesMenu}) => {
+
+    const ref = useRef();
+    useOnClickOutside(ref, () => setMenuActive(false));
+
     return (
-        <div className={menuActive ? "menu menu--active" : "menu"} onClick={() => setMenuActive(false)}>
+        <div ref={ref} className={menuActive ? "menu menu--active" : "menu"}
+             onClick={clickInsideClosesMenu ? () => setMenuActive(false) : null}>
             <ul className="menu__list">
-                {menuItems.map(item =>
-                    <li className="menu__list-item" key={item.id}>
-                        <Link to={item.to} style={{color: item.color}}>{item.value}</Link>
-                    </li>
-                )}
+                {children}
             </ul>
         </div>
     );

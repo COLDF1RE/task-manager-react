@@ -1,18 +1,26 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import {useLocation} from "react-router-dom";
 import {pages} from "../router/pages";
 import Menu from "./Menu";
+import {events} from "../store/store";
 
-const Header = () => {
+const Header = ({tasksActive}) => {
 
     const {pathname} = useLocation()
-
     const [menuActive, setMenuActive] = useState(false)
-    const menuItems = [
-        {id: 1, value: 'Посмотреть профиль', to: pages.tasks},
-        {id: 2, value: 'Выйти из системы', to: pages.login},
-    ]
+    const history = useHistory();
+    const defaultAvatar = 'https://mustact.by/img/empty/artist.avatar.png'
+
+    function redirectTo(path) {
+        history.push(path);
+    }
+
+    function logout() {
+        events.authOff()
+        localStorage.clear()
+        redirectTo("/")
+    }
 
     return (
         <header className="header">
@@ -46,20 +54,42 @@ const Header = () => {
                     </svg>
                 </Link>
             </div>
-            {pathname !== pages.login &&
-            <div className="header__nav">
-                <Link to={pages.tasks}
-                      className={`header__nav-item ${pathname === pages.tasks && 'header__nav-item--active'}`}>Задачи</Link>
-                <Link to={pages.users}
-                      className={`header__nav-item ${pathname === pages.users && 'header__nav-item--active'}`}>Пользователи</Link>
-            </div>
+
+            {events.auth &&
+                <>
+                    {/*{pathname !== pages.login &&*/}
+                    <div className="header__nav">
+                        <Link to={pages.tasks}
+                              className={`header__nav-item ${tasksActive && 'header__nav-item--active'}`}>Задачи</Link>
+                        <Link to={pages.users}
+                              className={`header__nav-item ${!tasksActive && 'header__nav-item--active'}`}>Пользователи</Link>
+                    </div>
+                    {/*}*/}
+                    <div className="header__profile">
+                        <div className="header__profile-name">{localStorage.getItem('username')}</div>
+
+                        {menuActive ?
+                            <img className="header__profile-image" onClick={() => setMenuActive(!menuActive)}
+                                 src={localStorage.getItem('userPhotoUrl') !== '' ? localStorage.getItem('userPhotoUrl') : defaultAvatar} alt=""/>
+                            :
+                            <>
+                                <img className="header__profile-image" onClick={() => setMenuActive(!menuActive)}
+                                     src={localStorage.getItem('userPhotoUrl') !== '' ? localStorage.getItem('userPhotoUrl') : defaultAvatar} alt=""/>
+                            </>
+                        }
+
+                        <Menu menuActive={menuActive} setMenuActive={setMenuActive} clickInsideClosesMenu={true}>
+                            <li>
+                                <Link to={pages.users + '/' + localStorage.getItem('userId')} className="menu__list-item">Посмотреть профиль</Link>
+                            </li>
+                            <li>
+                                <button onClick={logout} className="menu__list-item">Выйти из системы</button>
+                            </li>
+                        </Menu>
+                    </div>
+                </>
             }
-            <div className="header__profile">
-                <div className="header__profile-name">Малыш Грут</div>
-                <img className="header__profile-image" onClick={() => setMenuActive(!menuActive)}
-                     src="https://i.pinimg.com/originals/bb/89/5a/bb895ac90385fcc34724e94ed78a69ec.jpg" alt=""/>
-                <Menu menuActive={menuActive} setMenuActive={setMenuActive} menuItems={menuItems} />
-            </div>
+
         </header>
     );
 };

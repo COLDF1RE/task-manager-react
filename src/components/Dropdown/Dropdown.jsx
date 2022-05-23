@@ -1,87 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
+import './Dropdown.scss'
+import Menu from "../Menu";
 
-const Dropdown = () => {
+const Dropdown = ({change, title, values, form, inputType, clickInsideCloseMenu}) => {
+
+    const [menuActive, setMenuActive] = useState(false)
+
+    function dropdownName(defaultName, name) {
+        if (form[name]?.length === 0) {
+            return defaultName
+        } else if (typeof form[name] === 'object' && form[name]?.length > 1) {
+            return `Выбрано: ${form[name].length}`
+        } else {
+            return form[name]
+        }
+    }
+
     return (
-
-    <form>
-        <h1>Dropdown Checkboxes</h1>
-        <div className="dropdown">
-            <label className="dropdown-label">Select Options</label>
-
-            <div className="dropdown-list">
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group-all" className="check-all checkbox-custom"
-                           id="checkbox-main"/>
-                    <label htmlFor="checkbox-main" className="checkbox-custom-label">Selection All</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_01"/>
-                    <label htmlFor="checkbox-custom_01" className="checkbox-custom-label">Selection 1</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_02"/>
-                    <label htmlFor="checkbox-custom_02" className="checkbox-custom-label">Selection 2</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_03"/>
-                    <label htmlFor="checkbox-custom_03" className="checkbox-custom-label">Selection 3</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_04"/>
-                    <label htmlFor="checkbox-custom_04" className="checkbox-custom-label">Selection 4</label>
-                </div>
-            </div>
-        </div>
-
-
-        <div className="dropdown">
-            <label className="dropdown-label">Select Options</label>
-
-            <div className="dropdown-list">
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group-all" className="check-all checkbox-custom"
-                           id="checkbox-main1"/>
-                    <label htmlFor="checkbox-main1" className="checkbox-custom-label">Selection All</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_21"/>
-                    <label htmlFor="checkbox-custom_21" className="checkbox-custom-label">Selection 1</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_22"/>
-                    <label htmlFor="checkbox-custom_22" className="checkbox-custom-label">Selection 2</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_23"/>
-                    <label htmlFor="checkbox-custom_23" className="checkbox-custom-label">Selection 3</label>
-                </div>
-
-                <div className="checkbox">
-                    <input type="checkbox" name="dropdown-group" className="check checkbox-custom"
-                           id="checkbox-custom_34"/>
-                    <label htmlFor="checkbox-custom_24" className="checkbox-custom-label">Selection 4</label>
-                </div>
-            </div>
-        </div>
-
-
-        <button type="submit">кнопка</button>
-
-    </form>
+        <fieldset className={title.className}>
+            {menuActive ?
+                <button className="custom-checkbox__title" onClick={() => setMenuActive(true)}>{dropdownName(title.defaultName, title.name)}</button>
+                :
+                <>
+                <button className="custom-checkbox__title" onClick={() => setMenuActive(true)}>{dropdownName(title.defaultName, title.name)}</button>
+                </>
+            }
+            <Menu menuActive={menuActive} setMenuActive={setMenuActive} clickInsideClosesMenu={clickInsideCloseMenu || false}>
+                {values.map(item =>
+                    <li key={item.value || item.id}>
+                        <label className="custom-checkbox" htmlFor={item.value || item.id}>
+                            <input className="custom-checkbox__input" id={item.value || item.id} type={inputType || "checkbox"} value={item.value || item.id}
+                                   onClick={change} name={title.name}/>
+                            <span>{item.name || item.username}</span>
+                        </label>
+                    </li>
+                )}
+            </Menu>
+        </fieldset>
     );
 };
 

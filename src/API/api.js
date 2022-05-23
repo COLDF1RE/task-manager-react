@@ -8,42 +8,44 @@ const request = async (url, method = 'GET', body) => {
             'Content-type': 'application/json'
         })
     });
-    return await response.json();
+    // if (response.status === 200) {
+        return await response.json();
+    // }
 }
 
 
 ///////////////////////// TASKS ///////////////////////////////
 
-export const getFilteredTasks = (data) => {
-    const filteredData = {
-        "filter": {
-            "query": "",
-            "assignedUsers": [
-                // "string"
-            ],
-            "userIds": [
-                // "string"
-            ],
-            "type": [
-                // "task"
-            ],
-            "status": [
-                // "opened"
-            ],
-            "rank": [
-                // "low"
-            ]
-        },
-        "page": 0,
-        "limit": 0
-    }
+export const getFilteredTasks = (filterTasks) => {
+    let filteredData
+        if(filterTasks) {
+            filteredData = {
+                filter: filterTasks,
+                page: 0,
+                limit: 0
+            }
+        } else {
+            filteredData = {
+                filter: {},
+                // filter: {
+                //     query: '',
+                //     assignedUsers: [],
+                //     userIds: [],
+                //     type: [],
+                //     status: [],
+                //     rank: []
+                // },
+                page: 0,
+                limit: 0
+            }
+        }
   return request(url + '/tasks', 'POST', filteredData)
 }
 
 
 ////////// DELETE TASK /////////////
 export const deleteTask = (taskId) => {
-    return request(url + '/tasks' + taskId, 'DELETE', taskId)
+    return request(url + '/tasks/' + taskId, 'DELETE')
 }
 
 
@@ -60,7 +62,7 @@ export const changeWorkTimeTask = (taskId, body) => {
 
 /////////// STATUS TASK /////////
 export const changeStatusTask = (taskId, status) => {
-    return request(url + '/tasks/' + taskId + '/status/' + status, 'PATCH', taskId)
+    return request(url + '/tasks/' + taskId + '/status/' + status, 'PATCH')
 }
 
 
@@ -75,7 +77,7 @@ export const changeTimeWorkTask = (taskId, body) => {
 }
 
 ////////// ADD & EDIT TASK/////////////
-export const addTask = (body) => {
+export const createOrEditTask = (body) => {
     const body1 =
         {
             "id": "string",
@@ -90,26 +92,26 @@ export const addTask = (body) => {
             "status": "opened",
             "rank": "low"
         }
-    return request(url + '/tasks/createOrEdit', 'PUT', body1)
+    return request(url + '/tasks/createOrEdit', 'PUT', body)
 }
 
-export const editTask = (body) => {
-    const body1 =
-        {
-            "id": "string",
-            "userId": "string",
-            "assignedId": "string",
-            "title": "string",
-            "description": "string",
-            "type": "task",
-            "dateOfCreation": "2022-05-07T14:48:59.879Z",
-            "dateOfUpdate": "2022-05-07T14:48:59.879Z",
-            "timeInMinutes": 0,
-            "status": "opened",
-            "rank": "low"
-        }
-    return request(url + '/tasks/createOrEdit', 'PUT', body1)
-}
+// export const editTask = (body) => {
+//     const body1 =
+//         {
+//             "id": "string",
+//             "userId": "string",
+//             "assignedId": "string",
+//             "title": "string",
+//             "description": "string",
+//             "type": "task",
+//             "dateOfCreation": "2022-05-07T14:48:59.879Z",
+//             "dateOfUpdate": "2022-05-07T14:48:59.879Z",
+//             "timeInMinutes": 0,
+//             "status": "opened",
+//             "rank": "low"
+//         }
+//     return request(url + '/tasks/createOrEdit', 'PUT', body1)
+// }
 ///////////////////////////////////
 
 
@@ -118,7 +120,7 @@ export const getComments = (tasksId) => {
     return request(url + '/comments/' + tasksId , 'GET')
 }
 
-export const createOrEditComments = (body) => {
+export const createOrEditComment = (body) => {
     const body1=
         {
             "id": "string",
@@ -126,10 +128,10 @@ export const createOrEditComments = (body) => {
             "userId": "string",
             "text": "string"
         }
-    return request(url + '/comments/createOrEdit', 'PUT')
+    return request(url + '/comments/createOrEdit', 'PUT', body)
 }
 
-export const deleteComments = (commentId) => {
+export const deleteComment = (commentId) => {
     return request(url + '/comments/' + commentId, 'DELETE')
 }
 

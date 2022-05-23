@@ -1,9 +1,7 @@
-import React, {useEffect, useState, useLayoutEffect} from 'react';
-import BoardHeader from "../components/Board-header";
+import React, {useEffect, useState} from 'react';
 import Header from "../components/Header";
 import TaskRead from "../components/TaskRead";
-import TaskEdit from "../components/TaskEdit";
-import TaskAdd from "../components/TaskAdd";
+import TaskForm from "../components/TaskForm";
 import {useLocation, useParams, useHistory} from "react-router-dom";
 import {pages} from "../router/pages";
 import TaskList from "../components/TaskList";
@@ -17,27 +15,37 @@ const Tasks = observer(() => {
     const {id} = useParams() || false
     const {pathname} = useLocation()
     const history = useHistory();
+    const users = events.users || []
+    const tasks = events.tasks?.data || []
+    const currentTask = tasks.find(task => task.id === id) || [];
+
+    const opened = [{value: 'inProgress', name: 'Взять в работу'}, {value: 'complete', name: 'Отметить как выполненное'}]
+    const inProgress = [{value: 'opened', name: 'Заново открыть'}, {value: 'testing', name: 'Взять на тестирование'}, {value: 'complete', name: 'Отметить как выполненное'}]
+    const testing = [{value: 'opened', name: 'Заново открыть'}, {value: 'complete', name: 'Отметить как выполненное'}]
+    const complete = [{value: 'opened', name: 'Заново открыть'}]
+
+    useEffect(()=>{
+        events.fetch()
+    }, [])
 
     function historyBack() {
         history.goBack()
     }
 
-    const users = events.users || []
-    const tasks = events.tasks.data || []
-    const currentTask = tasks.find(task => task.id === id) || [];
-
-    // console.log('id: ', id)
-    // console.log('pathname: ', pathname)
-    //
-    // console.log('tasks: ', tasks)
-    // console.log('currentTask: ', currentTask)
-    //
-    // console.log('users:', users)
-    // console.log('currentUser: ', currentUser)
+    function deleteTask() {
+        events.deleteTask(id)
+        historyBack()
+    }
+    
+    function changeStatusTask(evt) {
+        const status = evt.target.value
+        events.changeStatusTask(id, status)
+        console.log(id, status)
+    }
 
     return (
         <>
-            <Header/>
+            <Header tasksActive={true}/>
 
             {/*//////////// TASKS ////////////*/}
             {/*<BoardHeader/>*/}
@@ -63,19 +71,38 @@ const Tasks = observer(() => {
             <>
                 <div className="board-header">
                     <div className="board-header__info">
-                        <h1 className="board-header__info-title">{currentTask.title}</h1>
-                        <div className="board-header__info-status status status--default">{currentTask.status}</div>
+                        <h1 className="board-header__info-title">{currentTask.title}
+                            {currentTask.status === 'opened' && <span className="board-header__info-status status status--default">Открыто</span>}
+                            {currentTask.status === 'inProgress' && <span className="board-header__info-status status status--yellow">В Работе</span>}
+                            {currentTask.status === 'testing' && <span className="board-header__info-status status status--yellow">Тестирование</span>}
+                            {currentTask.status === 'complete' && <span className="board-header__info-status status status--green">Сделано</span>}
+                        </h1>
                     </div>
                     <div className="board-header__options">
-                        <button className="board-header__options-btn button button--default">Взять в работу</button>
-                        <Link to={pages.taskAdd}
-                              className="board-header__options-btn button button--primary">Редактировать</Link>
-                        <button className="board-header__options-btn button button--error">Удалить</button>
+                        {currentTask.status === 'opened' && opened.map(item =>
+                            <button key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button button--default">{item.name}</button>
+                        )}
+                        {currentTask.status === 'inProgress' && inProgress.map(item =>
+                            <button key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button button--default">{item.name}</button>
+                        )}
+                        {currentTask.status === 'testing' && testing.map(item =>
+                            <button key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button button--default">{item.name}</button>
+                        )}
+                        {currentTask.status === 'complete' && complete.map(item =>
+                            <button key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button button--default">{item.name}</button>
+                        )}
+                        {currentTask.userId === localStorage.getItem('userId') &&
+                            <>
+                                <Link to={`/tasks/edit/${id}`} className="board-header__options-btn button button--primary">Редактировать</Link>
+                                <button onClick={deleteTask} className="board-header__options-btn button button--error">Удалить</button>
+                            </>
+                        }
                     </div>
                 </div>
                 <div className="board">
                     <TaskRead tasks={tasks} currentTask={currentTask} users={users}/>
                 </div>
+                <footer className="footer"></footer>
             </>
             }
 
@@ -87,34 +114,16 @@ const Tasks = observer(() => {
                         <h1 className="board-header__info-title">Создание</h1>
                     </div>
                     <div className="board-header__options">
-                        <button form="add-edit-task" className="board-header__options-btn button button--primary">Сохранить</button>
+                        <button form="add-edit-task"
+                                className="board-header__options-btn button button--primary">Сохранить
+                        </button>
                         <button onClick={historyBack}
                                 className="board-header__options-btn button button--default">Отмена
                         </button>
                     </div>
                 </div>
                 <div className="board">
-                    <TaskAdd users={users}/>
-                </div>
-            </>
-            }
-
-            {/*//////// TASKS EDIT ////////////*/}
-            {pathname === pages.taskEdit &&
-            <>
-                <div className="board-header">
-                    <div className="board-header__info">
-                        <h1 className="board-header__info-title">Редактирование</h1>
-                    </div>
-                    <div className="board-header__options">
-                        <button className="board-header__options-btn button button--primary">Сохранить</button>
-                        <button onClick={historyBack}
-                                className="board-header__options-btn button button--default">Отмена
-                        </button>
-                    </div>
-                </div>
-                <div className="board">
-                    <TaskEdit tasks={tasks}/>
+                    <TaskForm users={users}/>
                 </div>
             </>
             }

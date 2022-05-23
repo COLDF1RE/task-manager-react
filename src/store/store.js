@@ -1,13 +1,23 @@
-import {computed, makeAutoObservable, onBecomeObserved} from "mobx";
-import {addTask, changeWorkTimeTask, editTask, editUser} from "../API/api";
+import {makeAutoObservable} from "mobx";
+import {
+    createOrEditTask,
+    deleteTask,
+    changeStatusTask,
+    changeWorkTimeTask,
+    createOrEditComment,
+    deleteComment,
+    editUser,
+    loginUser,
+    getAllUsers,
+    getFilteredTasks,
+    getComments,
+} from "../API/api";
 import moment from 'moment';
-
-import {getAllUsers, getFilteredTasks} from "../API/api";
-import {getComments} from "../API/api";
-import {useParams} from "react-router-dom";
 
 
 class EventsStore {
+    auth = false
+    login = []
     tasks = [];
     users = [];
     comments = [];
@@ -17,46 +27,77 @@ class EventsStore {
             autoBind: true,
             // data: computed,
         });
-
-        onBecomeObserved(this, 'tasks', this.fetch);
+        // onBecomeObserved(this, 'users', this.fetch);
+        // onBecomeObserved(this, 'tasks', this.fetch);
     }
 
-    * fetch(taskId) {
-        const responseTasks = yield getFilteredTasks();
+    * fetch(body) {
+        const responseTasks = yield getFilteredTasks(body);
         this.tasks = responseTasks
 
         const responseUsers = yield getAllUsers();
         this.users = responseUsers
+    }
 
-        if (taskId) {
-            const responseComments = yield getComments(taskId);
-            this.comments = responseComments
+    * loginUser(body) {
+        const response = yield loginUser(body)
+        this.login = response
+        if (!!this.login.id) {
+            this.authOn()
+            localStorage.setItem('auth', 'true')
+            localStorage.setItem('userId', this.login.id)
+            localStorage.setItem('username', this.login.username)
+            localStorage.setItem('userPhotoUrl', this.login.photoUrl)
         }
     }
 
-    * addTask(data) {
-        yield addTask(data)
+    authOn() {
+        this.auth = true
+    }
+
+    authOff() {
+        this.auth = false
+    }
+
+    * createOrEditTask(body) {
+        yield createOrEditTask(body)
         yield this.fetch();
     }
 
-    * editTask(data) {
-        yield editTask(data);
+    * deleteTask(taskId) {
+        yield deleteTask(taskId);
         yield this.fetch();
     }
 
-    * editUser(data) {
-        yield editUser(data);
+    * changeStatusTask(taskId, status) {
+        yield changeStatusTask(taskId, status);
+        yield this.fetch();
+    }
+
+    * editUser(body) {
+        yield editUser(body);
         yield this.fetch();
     }
 
     * getComments(taskId) {
-        yield getComments(taskId)
-        yield this.fetch(taskId);
+         const response = yield getComments(taskId)
+         this.comments = response
+         // yield this.fetch()
+    }
+
+    * createOrEditComment(body) {
+        yield createOrEditComment(body)
+        // yield this.fetch()
+    }
+
+    * deleteComment(commentId) {
+        yield deleteComment(commentId)
+        // yield this.fetch()
     }
 
     * changeWorkTimeTask(taskId, body) {
         yield changeWorkTimeTask(taskId, body)
-        // yield this.fetch();
+        yield this.fetch();
     }
 }
 

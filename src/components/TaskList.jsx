@@ -4,7 +4,8 @@ import Task from "./Task";
 import NoTasks from "./NoTasks";
 import Pagination from "./Pagination";
 import usePagination from "../hooks/usePagination";
-import {events} from "../store/store";
+// import {events} from "../store/store";
+import {observer} from "mobx-react";
 
 const TaskList = ({tasks, users}) => {
 
@@ -30,13 +31,13 @@ const TaskList = ({tasks, users}) => {
 
     return (
         <>
-            <TaskFilter/>
+            <TaskFilter users={users}/>
             <div className="tasks-wrapper">
                 {tasks.length !== 0
                     ? tasks.slice(firstContentIndex, lastContentIndex)
                         .map(task =>
                             <Task task={task} key={task.id}
-                                  username={getUserName(task.userId) !== undefined ? getUserName(task.userId).username : getUserName(task.userId)} />
+                                  username={getUserName(task.assignedId) !== undefined ? getUserName(task.assignedId).username : getUserName(task.userId)} />
                         )
                     : <NoTasks/>
                 }

@@ -1,15 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "../components/Header";
 import BoardHeader from "../components/Board-header";
 import {pages} from "../router/pages";
-import {useLocation, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import UserList from "../components/UserList";
 import UserRead from "../components/UserRead";
 import {observer} from "mobx-react";
 import {events} from "../store/store";
 
 
-// const Users = ({tasks}) => {
 const Users = observer(() => {
 
     const {id} = useParams()
@@ -18,11 +17,15 @@ const Users = observer(() => {
     const currentUser = events.users.find(user => user.id === id) || []
     const tasks = []
 
+    useEffect(()=>{
+        events.fetch()
+    }, [])
+
     const [modalActive, setModalActive] = useState(false)
 
     return (
         <>
-            <Header/>
+            <Header />
             {/*<BoardHeader/>*/}
             {/*/////////////////////////// USERS /////////////////////////*/}
             {pathname === pages.users &&
@@ -47,7 +50,7 @@ const Users = observer(() => {
                         <h1 className="board-header__info-title">{currentUser.username}</h1>
                     </div>
                     <div className="board-header__options">
-                        <button className="board-header__options-btn button button--default">Добавить задачу</button>
+                        <Link to={pages.taskAdd} className="board-header__options-btn button button--default">Добавить задачу</Link>
                         <button className="board-header__options-btn button button--primary"
                                 onClick={() => setModalActive(true)}>Редактировать
                         </button>

@@ -1,35 +1,45 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Pagination from "./Pagination";
 import Modal from "./Modal";
 import {useHistory} from "react-router-dom";
 import {events} from "../store/store"
+import Task from "./Task";
+import {observer} from "mobx-react";
+import usePagination from "../hooks/usePagination";
+import NoTasks from "./NoTasks";
 
-const UserRead = ({currentUser, modalActive, setModalActive}) => {
 
-    const defaultAvatar = 'https://www.meme-arsenal.com/memes/b0f2b5f3d8ed2e0e023b216206d5e356.jpg'
+// const UserRead = ({currentUser, modalActive, setModalActive}) => {
+const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
 
-    // состояние на уровне выше
-    // const [modalActive, setModalActive] = useState(true)
+    const defaultAvatar = 'https://mustact.by/img/empty/artist.avatar.png'
+    const tasks = events.tasks.data || []
+    const userTasks = tasks.filter(task => task.assignedId === currentUser.id) || [];
 
+    /////////////////////////////// PAGINATION /////////////////////////
+    const {
+        firstContentIndex,
+        lastContentIndex,
+        nextPage,
+        prevPage,
+        page,
+        setPage,
+        totalPages,
+    } = usePagination({
+        contentPerPage: 10,
+        count: userTasks ? userTasks.length : '',
+        // count: events ? events.data.total : '',
+    });
 
     ////////////////////////////////// FORM ///////////////////////////////
-    //
     const [ form, setForm ] = useState({
         id: currentUser.id,
         login: currentUser.login,
         username: currentUser.username,
-        about: currentUser.about !== null ? currentUser.photoUrl : "",
+        about: currentUser.about !== null ? currentUser.about : "",
         photoUrl: currentUser.photoUrl !== null ? currentUser.photoUrl : "",
         password: "123",
     })
-
-    // function clearForm() {
-    // setForm({
-    //     theme: '',
-    //     comment: '',
-    //     date: newDate
-    // })
-    // }
 
     const handleFieldChange = (evt) => {
         const {name, value} = evt.target
@@ -39,11 +49,9 @@ const UserRead = ({currentUser, modalActive, setModalActive}) => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
-            events.editUser({
-                // id: current.id,
-                ...form
-                // historyBack()
-            })
+        events.editUser(form)
+        localStorage.setItem('userPhotoUrl', form.photoUrl)
+        setModalActive(false)
         console.log('submit form editUser: ', form)
     }
 
@@ -51,9 +59,6 @@ const UserRead = ({currentUser, modalActive, setModalActive}) => {
     function historyBack() {
         history.goBack()
     }
-
-    //
-    //////////////////////////////////////////////////////////
 
     return (
         <>
@@ -71,12 +76,33 @@ const UserRead = ({currentUser, modalActive, setModalActive}) => {
                 <div className={'user-profile__tasks'}>
                     <div className={'user-profile__tasks-title'}>Задачи</div>
                     <div className={'user-profile__tasks-wrap'}>
-                        <div className={'user-profile__tasks-item user'}>задача 1</div>
-                        <div className={'user-profile__tasks-item user'}>задача 2</div>
-                        <div className={'user-profile__tasks-item user'}>задача 3</div>
-                        <div className={'user-profile__tasks-item user'}>задача 4</div>
+
+                        {/*{tasks.map(task =>*/}
+                        {/*    <Task task={task} key={task.id}/>*/}
+                        {/*)}*/}
+
+                        {userTasks.length !== 0
+                            ? userTasks.slice(firstContentIndex, lastContentIndex)
+                                .map(task =>
+                                    <Task task={task} key={task.id}/>
+                                )
+                            : <NoTasks/>
+                        }
+
+
+
                     </div>
-                    <Pagination/>
+                    <Pagination
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                        tasksLength={userTasks.length}
+                        // tasksLength={events.data.total}
+                        firstContentIndex={firstContentIndex}
+                        lastContentIndex={lastContentIndex}
+                        totalPages={totalPages}
+                        page={page}
+                        setPage={setPage}
+                    />
                 </div>
             </div>
 
@@ -119,6 +145,6 @@ const UserRead = ({currentUser, modalActive, setModalActive}) => {
             </Modal>
         </>
     );
-};
+});
 
 export default UserRead;

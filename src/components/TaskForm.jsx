@@ -1,15 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import {events} from "../store/store";
-import {createOrEditTask} from "../API/api";
+import Dropdown from "./Dropdown/Dropdown";
 
-const TaskAddOrEdit = ({users, tasks}) => {
+const TaskForm = ({users, tasks}) => {
 
     const {id} = useParams() || false
     const currentTask = id !== 'add' ? tasks.find(task => task.id === id) : '';
 
+    const type = [{value: 'task', name: 'Задача'}, {value: 'bug', name: 'Ошибка'}]
+    const rank = [{value: 'low', name: 'Низкий'}, {value: 'medium', name: 'Средний'}, {value: 'high', name: 'Высокий'}]
+    const typeTitle = {defaultName: 'Выбрать', name: 'type', className: 'task-edit__info-select z-index2'}
+    const rankTitle = {defaultName: 'Выбрать', name: 'rank', className: 'task-edit__info-select z-index1'}
+    const userTitle = {defaultName: 'Выбрать', name: 'assignedId', className: 'task-edit__info-select z-index3'}
+
     const [ form, setForm ] = useState({
-        userId: "6273dcf6d09b551dca8762a0",
+        userId: localStorage.getItem('userId'),
         assignedId: "",
         title: "",
         description: "",
@@ -21,7 +27,7 @@ const TaskAddOrEdit = ({users, tasks}) => {
         if (currentTask) {
             setForm({
                 id: currentTask.id,
-                userId: "6273dcf6d09b551dca8762a0",
+                userId: localStorage.getItem('userId'),
                 assignedId: currentTask.assignedId,
                 title: currentTask.title,
                 description: currentTask.description,
@@ -35,22 +41,10 @@ const TaskAddOrEdit = ({users, tasks}) => {
         }
     }, [events.tasks])
 
-
-
-    // function clearForm() {
-        // setForm({
-        //     theme: '',
-        //     comment: '',
-        //     date: newDate
-        // })
-    // }
-
     const handleFieldChange = (evt) => {
         const {name, value} = evt.target
         setForm({...form, [name]: value})
-
     }
-    console.log('form add/edit task: ',form)
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
@@ -58,18 +52,13 @@ const TaskAddOrEdit = ({users, tasks}) => {
         historyBack()
         // if (id) {
         //     events.createOrEditTask({
-        //         id: event._id,
-        //         favorite: event.favorite,
-        //         archive: event.archive,
         //         ...form
         //     })
         //     historyBack()
         // } else {
         //     events.createOrEditTask(form)
-        //     clearForm()
         //     historyBack()
         // }
-
         console.log('submit form add/edit task: ', form)
     }
 
@@ -84,40 +73,13 @@ const TaskAddOrEdit = ({users, tasks}) => {
 
                 <fieldset className="task-edit__info">
                     <label htmlFor="assignedId" className="task-edit__info-title">Исполнитель</label>
-                    <select
-                        className="task-edit__info-select"
-                        onChange={handleFieldChange}
-                        name="assignedId"
-                        required
-                    >
-                        {users.map(user =>
-                            <option value={user.id} key={user.id} className="">{user.username}</option>
-                        )}
-                    </select>
+                    <Dropdown change={handleFieldChange} form={form} values={users} title={userTitle} clickInsideCloseMenu={false} inputType={'radio'}/>
 
                     <label htmlFor="type" className="task-edit__info-title">Тип запроса</label>
-                    <select
-                        className="task-edit__info-select"
-                        onChange={handleFieldChange}
-                        name="type"
-                        required
-                        value={form.type}
-                    >
-                        <option value="task" className="">Задача</option>
-                        <option value="bug" className="">Ошибка</option>
-                    </select>
+                    <Dropdown change={handleFieldChange} form={form} values={type} title={typeTitle} clickInsideCloseMenu={false} inputType={'radio'}/>
 
                     <label htmlFor="rank" className="task-edit__info-title">Приоритет</label>
-                    <select
-                        className="task-edit__info-select"
-                        onChange={handleFieldChange}
-                        name="rank"
-                        required
-                    >
-                        <option value="low" className="">Низкий</option>
-                        <option value="medium" className="">Средний</option>
-                        <option value="high" className="">Высокий</option>
-                    </select>
+                    <Dropdown change={handleFieldChange} form={form} values={rank} title={rankTitle} clickInsideCloseMenu={false} inputType={'radio'}/>
                 </fieldset>
 
                 <fieldset className="task-edit__description">
@@ -130,7 +92,6 @@ const TaskAddOrEdit = ({users, tasks}) => {
                         value={form.title}
                         required
                     />
-
                     <label htmlFor="description" className="task-edit__description-title">Описание</label>
                     <textarea
                         className="task-edit__description-textarea"
@@ -138,7 +99,6 @@ const TaskAddOrEdit = ({users, tasks}) => {
                         name="description"
                         value={form.description}
                     />
-
                 </fieldset>
 
             </form>
@@ -146,4 +106,4 @@ const TaskAddOrEdit = ({users, tasks}) => {
     );
 };
 
-export default TaskAddOrEdit;
+export default TaskForm;
