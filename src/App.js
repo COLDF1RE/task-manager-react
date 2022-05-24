@@ -32,15 +32,15 @@ const App = observer(() => {
                     <Route path={pages.tasksId} exact component={TaskOpen}/>
                     <Route path={pages.taskEdit} exact component={TaskEvent}/>
                     <Route path={pages.usersId} exact component={Users}/>
-                    <Redirect to='/tasks'/>
-                    {/*<Route component={Error404}/>*/}
+                    <Route component={Error404}/>
+                    {/*<Redirect to='/tasks'/>*/}
                     {/*<Route path={ pages.tasksId } exact render={(props) => <TasksOld tasks={ mocksTasks } {...props} />}/>*/}
                 </Switch>
                 :
                 <Switch>
                     <Route path={pages.login} exact component={Login}/>
-                    <Redirect to='/login'/>
-                    {/*<Route component={Error404}/>*/}
+                    <Route component={Error404}/>
+                    {/*<Redirect to='/login'/>*/}
                 </Switch>
             }
         </BrowserRouter>

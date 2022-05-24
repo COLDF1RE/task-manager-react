@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {events} from "../store/store";
+import {useHistory} from "react-router-dom";
+import {observer} from "mobx-react";
 
 
 const LoginForm = () => {
@@ -14,18 +16,18 @@ const LoginForm = () => {
         setLoginForm({...loginForm, [name]: value})
     }
 
-    const handleSubmit = (evt) => {
+    async function handleSubmit (evt) {
         evt.preventDefault()
-        events.loginUser(loginForm)
-        // redirectTo("/tasks")
+        await events.loginUser(loginForm)
+        await redirectTo("/tasks")
     }
 
-    // const history = useHistory();
-    // function redirectTo(path) {
-    //     if (events.auth) {
-    //         history.push(path);
-    //     }
-    // }
+    const history = useHistory();
+    function redirectTo(path) {
+        if (events.auth) {
+            history.push(path);
+        }
+    }
 
     return (
         <form className="login" onSubmit={handleSubmit}>

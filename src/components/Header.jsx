@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link, useHistory, useParams} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {pages} from "../router/pages";
 import Menu from "./UI/Menu";
 import {events} from "../store/store";
@@ -17,7 +17,7 @@ const Header = ({tasksActive}) => {
     function logout() {
         events.authOff()
         localStorage.clear()
-        redirectTo("/")
+        redirectTo("/login")
     }
 
     return (
