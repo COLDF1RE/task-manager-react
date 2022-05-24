@@ -10,19 +10,16 @@ const Comment = ({comment, username}) => {
        await events.getComments(comment.taskId)
     }
 
-
     return (
         <>
             <div className="task-open__comments-item comment">
                 <div className="comment__header">
-                    <div className="comment__header-username">{username(comment.userId).username} ({moment(comment.dateOfCreation).format('DD.MM.YY HH:mm')})</div>
+                    <h4 className="comment__header-username">{username(comment.userId).username} ({moment(comment.dateOfCreation).format('DD.MM.YY HH:mm')})</h4>
                     {comment.userId === localStorage.getItem('userId') &&
                     <button onClick={handleDeleteComment} className="comment__header-button">Удалить</button>
                     }
                 </div>
-                <div className="comment__text">{comment.text}</div>
-
-
+                <p className="comment__text">{comment.text}</p>
             </div>
         </>
     );

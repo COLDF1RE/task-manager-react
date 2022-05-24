@@ -1,22 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import Pagination from "./Pagination";
+import React, {useState} from 'react';
+import Pagination from "./UI/Pagination";
 import Modal from "./Modal";
 import {useHistory} from "react-router-dom";
 import {events} from "../store/store"
 import Task from "./Task";
 import {observer} from "mobx-react";
 import usePagination from "../hooks/usePagination";
-import NoTasks from "./NoTasks";
+import EmptyList from "./EmptyList";
 
 
-// const UserRead = ({currentUser, modalActive, setModalActive}) => {
-const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
+const BoardUserOpen = observer(({currentUser, modalActive, setModalActive}) => {
 
     const defaultAvatar = 'https://mustact.by/img/empty/artist.avatar.png'
     const tasks = events.tasks.data || []
     const userTasks = tasks.filter(task => task.assignedId === currentUser.id) || [];
 
-    /////////////////////////////// PAGINATION /////////////////////////
+    ///////////////////////////// PAGINATION /////////////////////////
     const {
         firstContentIndex,
         lastContentIndex,
@@ -31,7 +30,7 @@ const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
         // count: events ? events.data.total : '',
     });
 
-    ////////////////////////////////// FORM ///////////////////////////////
+    //////////////////////////////// FORM ///////////////////////////////
     const [ form, setForm ] = useState({
         id: currentUser.id,
         login: currentUser.login,
@@ -67,36 +66,26 @@ const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
                     <div className={'user-profile__info-img-block'}>
                         <img src={currentUser.photoUrl ? currentUser.photoUrl : defaultAvatar} alt="avatar" className={'user-profile__info-img'}/>
                     </div>
-                    <div className={'user-profile__info-title'}>О себе</div>
-                    <div className={'user-profile__info-text'}>
-                        {currentUser.about}
-                    </div>
+                    <h3 className={'user-profile__info-title'}>О себе</h3>
+                    <p className={'user-profile__info-text'}>{currentUser.about}</p>
                 </div>
 
                 <div className={'user-profile__tasks'}>
-                    <div className={'user-profile__tasks-title'}>Задачи</div>
+                    <h3 className={'user-profile__tasks-title'}>Задачи</h3>
                     <div className={'user-profile__tasks-wrap'}>
-
-                        {/*{tasks.map(task =>*/}
-                        {/*    <Task task={task} key={task.id}/>*/}
-                        {/*)}*/}
-
-                        {userTasks.length !== 0
-                            ? userTasks.slice(firstContentIndex, lastContentIndex)
+                        {userTasks.length ?
+                            userTasks.slice(firstContentIndex, lastContentIndex)
                                 .map(task =>
                                     <Task task={task} key={task.id}/>
                                 )
-                            : <NoTasks/>
+                            :
+                            <EmptyList/>
                         }
-
-
-
                     </div>
                     <Pagination
                         nextPage={nextPage}
                         prevPage={prevPage}
                         tasksLength={userTasks.length}
-                        // tasksLength={events.data.total}
                         firstContentIndex={firstContentIndex}
                         lastContentIndex={lastContentIndex}
                         totalPages={totalPages}
@@ -108,11 +97,12 @@ const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
 
             <Modal modalActive={modalActive} setModalActive={setModalActive}>
                 <form className="" onSubmit={handleSubmit}>
-                <div className="modal__window-title">Редактирование пользователя</div>
+                <h3 className="modal__window-title">Редактирование пользователя</h3>
                 <div className="modal__window-body">
 
                     <label htmlFor="username" className="modal__window-subtitle">Имя пользователя</label>
                     <input
+                        id="username"
                         className="modal__window-input"
                         onChange={handleFieldChange}
                         name="username"
@@ -122,6 +112,7 @@ const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
 
                     <label htmlFor="photoUrl" className="modal__window-subtitle">URL фотографии</label>
                     <input
+                        id="photoUrl"
                         className="modal__window-input"
                         onChange={handleFieldChange}
                         name="photoUrl"
@@ -130,6 +121,7 @@ const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
 
                     <label htmlFor="about" className="modal__window-subtitle">О себе</label>
                     <textarea
+                        id="about"
                         className="modal__window-textarea"
                         onChange={handleFieldChange}
                         name="about"
@@ -147,4 +139,4 @@ const UserRead = observer(({currentUser, modalActive, setModalActive}) => {
     );
 });
 
-export default UserRead;
+export default BoardUserOpen;

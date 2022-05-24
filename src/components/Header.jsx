@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {Link, useHistory, useParams} from "react-router-dom";
-import {useLocation} from "react-router-dom";
 import {pages} from "../router/pages";
-import Menu from "./Menu";
+import Menu from "./UI/Menu";
 import {events} from "../store/store";
 
 const Header = ({tasksActive}) => {
 
-    const {pathname} = useLocation()
     const [menuActive, setMenuActive] = useState(false)
     const history = useHistory();
     const defaultAvatar = 'https://mustact.by/img/empty/artist.avatar.png'
@@ -57,14 +55,12 @@ const Header = ({tasksActive}) => {
 
             {events.auth &&
                 <>
-                    {/*{pathname !== pages.login &&*/}
                     <div className="header__nav">
                         <Link to={pages.tasks}
                               className={`header__nav-item ${tasksActive && 'header__nav-item--active'}`}>Задачи</Link>
                         <Link to={pages.users}
                               className={`header__nav-item ${!tasksActive && 'header__nav-item--active'}`}>Пользователи</Link>
                     </div>
-                    {/*}*/}
                     <div className="header__profile">
                         <div className="header__profile-name">{localStorage.getItem('username')}</div>
 
@@ -89,7 +85,6 @@ const Header = ({tasksActive}) => {
                     </div>
                 </>
             }
-
         </header>
     );
 };

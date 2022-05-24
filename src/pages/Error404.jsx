@@ -1,12 +1,8 @@
 import React from 'react';
 import {pages} from "../router/pages"
-import {Link, useLocation, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Error404 = () => {
-
-    const {id} = useParams()
-    const {pathname} = useLocation()
-    console.log('id: ', id, 'pathname: ', pathname)
 
     return (
         <div className={"error404"}>

@@ -11,8 +11,7 @@ import {
     getAllUsers,
     getFilteredTasks,
     getComments,
-} from "../API/api";
-import moment from 'moment';
+} from "../api/api";
 
 
 class EventsStore {
@@ -25,10 +24,7 @@ class EventsStore {
     constructor() {
         makeAutoObservable(this, {}, {
             autoBind: true,
-            // data: computed,
         });
-        // onBecomeObserved(this, 'users', this.fetch);
-        // onBecomeObserved(this, 'tasks', this.fetch);
     }
 
     * fetch(body) {
@@ -82,17 +78,14 @@ class EventsStore {
     * getComments(taskId) {
          const response = yield getComments(taskId)
          this.comments = response
-         // yield this.fetch()
     }
 
     * createOrEditComment(body) {
         yield createOrEditComment(body)
-        // yield this.fetch()
     }
 
     * deleteComment(commentId) {
         yield deleteComment(commentId)
-        // yield this.fetch()
     }
 
     * changeWorkTimeTask(taskId, body) {

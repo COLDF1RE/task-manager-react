@@ -9,7 +9,9 @@ html{
 }
 
 ul[class],
-ol[class] {
+ol[class],
+button,
+fieldset,{
   padding: 0;
 }
 
@@ -28,7 +30,9 @@ figure,
 figcaption,
 blockquote,
 dl,
-dd {
+dd,
+button,
+fieldset,{
   margin: 0;
 }
 
@@ -50,5 +54,32 @@ select {
 
 a{
   text-decoration: none;
+  color: inherit;
 }
 
+button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+select,
+input,
+button,
+textarea,
+fieldset{
+  border: none;
+}
+
+label {
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6, {
+  font-size: inherit;
+  font-weight: inherit;
+}

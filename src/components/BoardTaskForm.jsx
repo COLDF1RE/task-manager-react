@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import {events} from "../store/store";
-import Dropdown from "./Dropdown/Dropdown";
+import Dropdown from "./UI/Dropdown";
 
-const TaskForm = ({users, tasks}) => {
+const BoardTaskForm = ({users, tasks}) => {
 
     const {id} = useParams() || false
     const currentTask = id !== 'add' ? tasks.find(task => task.id === id) : '';
 
     const type = [{value: 'task', name: 'Задача'}, {value: 'bug', name: 'Ошибка'}]
     const rank = [{value: 'low', name: 'Низкий'}, {value: 'medium', name: 'Средний'}, {value: 'high', name: 'Высокий'}]
-    const typeTitle = {defaultName: 'Выбрать', name: 'type', className: 'task-edit__info-select z-index2'}
-    const rankTitle = {defaultName: 'Выбрать', name: 'rank', className: 'task-edit__info-select z-index1'}
-    const userTitle = {defaultName: 'Выбрать', name: 'assignedId', className: 'task-edit__info-select z-index3'}
+    const typeTitle = {defaultName: 'Выбрать', name: 'type'}
+    const rankTitle = {defaultName: 'Выбрать', name: 'rank'}
+    const userTitle = {defaultName: 'Выбрать', name: 'assignedId'}
 
     const [ form, setForm ] = useState({
         userId: localStorage.getItem('userId'),
@@ -50,16 +50,6 @@ const TaskForm = ({users, tasks}) => {
         evt.preventDefault()
         events.createOrEditTask(form)
         historyBack()
-        // if (id) {
-        //     events.createOrEditTask({
-        //         ...form
-        //     })
-        //     historyBack()
-        // } else {
-        //     events.createOrEditTask(form)
-        //     historyBack()
-        // }
-        console.log('submit form add/edit task: ', form)
     }
 
     const history = useHistory();
@@ -73,13 +63,13 @@ const TaskForm = ({users, tasks}) => {
 
                 <fieldset className="task-edit__info">
                     <label htmlFor="assignedId" className="task-edit__info-title">Исполнитель</label>
-                    <Dropdown change={handleFieldChange} form={form} values={users} title={userTitle} clickInsideCloseMenu={false} inputType={'radio'}/>
+                    <Dropdown change={handleFieldChange} form={form} values={users} title={userTitle} clickInsideCloseMenu={false} inputType={'radio'} className={'task-edit__info-select z-index3'}/>
 
                     <label htmlFor="type" className="task-edit__info-title">Тип запроса</label>
-                    <Dropdown change={handleFieldChange} form={form} values={type} title={typeTitle} clickInsideCloseMenu={false} inputType={'radio'}/>
+                    <Dropdown change={handleFieldChange} form={form} values={type} title={typeTitle} clickInsideCloseMenu={false} inputType={'radio'} className={'task-edit__info-select z-index2'}/>
 
                     <label htmlFor="rank" className="task-edit__info-title">Приоритет</label>
-                    <Dropdown change={handleFieldChange} form={form} values={rank} title={rankTitle} clickInsideCloseMenu={false} inputType={'radio'}/>
+                    <Dropdown change={handleFieldChange} form={form} values={rank} title={rankTitle} clickInsideCloseMenu={false} inputType={'radio'} className={'task-edit__info-select z-index1'}/>
                 </fieldset>
 
                 <fieldset className="task-edit__description">
@@ -106,4 +96,4 @@ const TaskForm = ({users, tasks}) => {
     );
 };
 
-export default TaskForm;
+export default BoardTaskForm;

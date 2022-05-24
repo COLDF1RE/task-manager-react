@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {pages} from "../router/pages";
 import {events} from "../store/store";
-import Menu from "./Menu";
-import Rank from "./Rank";
+import Menu from "./UI/Menu";
+import Rank from "./UI/Rank";
 
 const Task = ({task, username}) => {
 
@@ -47,6 +47,10 @@ const Task = ({task, username}) => {
             <Rank rank={rank}/>
 
             <div className="task__btn">
+                {/* Особенность хука useOnClickOutside - повторное нажатие на кнопку открытия меню не приводит к его закрытию)
+                фиксируется 2-ое нажатие - закрывает и сразу открывает вновь. Перепробовал 5-6 других реализаций - тоже самое.
+                В качестве временного решения написал код ниже. Он еще может встретится в других компонентах порядка 2 раз
+                */}
                 {menuActive ?
                     <svg className="task__btn-img" width="20" height="20" viewBox="0 0 20 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +90,7 @@ const Task = ({task, username}) => {
                 <Menu menuActive={menuActive} setMenuActive={setMenuActive} clickInsideClosesMenu={true}>
                     {userId === localStorage.getItem('userId') &&
                     <>
-                        <li><Link className="menu__list-item" to={`/tasks/edit/${id}`} >Редактировать</Link></li>
+                        <li><Link className="menu__list-item" to={pages.taskAdd + id} >Редактировать</Link></li>
                         <li><button className="menu__list-item" onClick={deleteTask}>Удалить</button></li>
                     </>
                     }
