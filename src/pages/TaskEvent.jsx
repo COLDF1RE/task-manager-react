@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from "../components/Header";
 import {events} from "../store/store";
 import {useHistory, useParams} from "react-router-dom";
@@ -18,6 +18,10 @@ const TaskEvent = observer(() => {
     function historyBack() {
         history.goBack()
     }
+
+    useEffect(()=>{
+        events.fetch()
+    }, [])
 
     return (
         <div className="wrapper">

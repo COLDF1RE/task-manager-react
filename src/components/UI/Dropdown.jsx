@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Menu from "./Menu";
-import {events} from "../../store/store";
 
 const Dropdown = ({change, title, values, form, inputType, clickInsideCloseMenu, className}) => {
 
@@ -22,9 +21,8 @@ const Dropdown = ({change, title, values, form, inputType, clickInsideCloseMenu,
             } else if (name === 'rank') {
                 return form[name].toString() === 'low' && 'Низкий' || form[name].toString() === 'medium' && 'Средний' || form[name].toString() === 'high' && 'Высокий'
             } else if (name === 'assignedUsers' || 'userId') {
-                const users = events.users || []
-                const currentUser = users.find(user => user.id === form[name].toString())
-                return currentUser.username
+                const currentUser = values.find(user => user.id === form[name].toString())
+                return currentUser?.username
             } else if (name === 'measureUnit'){
                 return form[name].toString() === 'minutes' && 'Минуты' || form[name].toString() === 'hours' && 'Часы' || form[name].toString() === 'days' && 'Дни'
             // Если ключа нет - возвращает value
