@@ -42,7 +42,7 @@ const TaskFilter = ({users}) => {
         <form className="board-filter" onSubmit={handleSubmit}>
             <Dropdown change={handleFieldChange} form={form} values={type} title={typeTitle} className={'board-filter__type board-filter__item'}/>
             <fieldset className="board-filter__query board-filter__item">
-                <input className="board-filter__query-input" type="text" value={form.query} name="query" onChange={handleFieldChange}/>
+                <input className="board-filter__query-input" type="text" value={form.query} name="query" onChange={handleFieldChange} placeholder="Название задачи"/>
             </fieldset>
             <Dropdown change={handleFieldChange} form={form} values={users}  title={userTitle} className={'board-filter__user board-filter__item'}/>
             <Dropdown change={handleFieldChange} form={form} values={status} title={statusTitle} className={'board-filter__status board-filter__item'}/>
