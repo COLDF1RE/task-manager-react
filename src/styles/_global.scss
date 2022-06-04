@@ -62,16 +62,28 @@ body {
 
 
 .rank {
-  font-size: 14px;
-  line-height: 16px;
-  &--high {
+  max-width: 120px;
+  width: 100%;
+  margin-right: 14px;
+  display: flex;
+  align-items: center;
+  &__icon {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+  }
+  &__text {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  &__text--red {
     color: #D14343;
   }
-  &--medium {
-    color: #E9B500;
-  }
-  &--low {
+  &__text--green {
     color: #3CA961;
+  }
+  &__text--yellow {
+    color: #E9B500;
   }
 }
 

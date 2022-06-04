@@ -18,21 +18,12 @@ const request = async (url, method = 'GET', body) => {
 
 ///////////////////////// TASKS ///////////////////////////////
 export const getFilteredTasks = (filterTasks) => {
-    let filteredData
-        if(filterTasks) {
-            filteredData = {
-                filter: filterTasks,
-                page: 0,
-                limit: 0
-            }
-        } else {
-            filteredData = {
-                filter: {},
-                page: 0,
-                limit: 0
-            }
-        }
-  return request(url + '/tasks', 'POST', filteredData)
+    const filteredData = {
+        filter: filterTasks || {},
+        page: 0,
+        limit: 0
+    }
+    return request(url + '/tasks', 'POST', filteredData)
 }
 
 export const deleteTask = (taskId) => {
