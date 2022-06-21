@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {Link, useHistory} from "react-router-dom";
-import {pages} from "../router/pages";
-import Menu from "./UI/Menu";
-import {events} from "../store/store";
+import {pages} from "../../router/pages";
+import Menu from "../UI/Menu";
+import {events} from "../../store/store";
+import './Header.scss'
 
 const Header = ({tasksActive}) => {
 
@@ -56,7 +57,7 @@ const Header = ({tasksActive}) => {
             {events.auth &&
                 <>
                     <div className="header__nav">
-                        <Link to={pages.tasks}
+                        <Link to={pages.tasks} 
                               className={`header__nav-item ${tasksActive && 'header__nav-item--active'}`}>Задачи</Link>
                         <Link to={pages.users}
                               className={`header__nav-item ${!tasksActive && 'header__nav-item--active'}`}>Пользователи</Link>

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Link, useHistory, useParams} from "react-router-dom";
 import BoardTaskOpen from "../components/BoardTaskOpen";
 import {events} from "../store/store";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import {observer} from "mobx-react";
 import {pages} from "../router/pages";
 import Footer from "../components/Footer";

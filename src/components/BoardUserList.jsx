@@ -1,6 +1,6 @@
 import React from 'react';
 import usePagination from "../hooks/usePagination";
-import User from "./User";
+import User from "./User/User";
 import EmptyList from "./EmptyList";
 import Pagination from "./UI/Pagination";
 

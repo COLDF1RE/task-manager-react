@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
-import {pages} from "../router/pages";
-import {events} from "../store/store";
-import Menu from "./UI/Menu";
-import Rank from "./UI/Rank";
+import {pages} from "../../router/pages";
+import {events} from "../../store/store";
+import Menu from "../UI/Menu";
+import Rank from "../UI/Rank";
+import './Task.scss'
+import Status from "../UI/Status/Status";
+import Rank2 from "../UI/Rank2/Rank2";
 
 const Task = ({task, username}) => {
 
@@ -21,7 +24,6 @@ const Task = ({task, username}) => {
     function changeStatusTask(evt) {
         const status = evt.target.value
         events.changeStatusTask(id, status)
-        console.log(id, status)
     }
 
     return (
@@ -38,13 +40,15 @@ const Task = ({task, username}) => {
             <div className="task__username">{username}</div>
 
             <div className="task__status">
-                {status === 'opened' && <div className="task__status-item status status--default">Открыто</div>}
-                {status === 'inProgress' && <div className="task__status-item status status--yellow">В Работе</div>}
-                {status === 'testing' && <div className="task__status-item status status--yellow">Тестирование</div>}
-                {status === 'complete' && <div className="task__status-item status status--green">Сделано</div>}
+                <Status status={status}/>
+                {/*{status === 'opened' && <div className="task__status-item status status--default">Открыто</div>}*/}
+                {/*{status === 'inProgress' && <div className="task__status-item status status--yellow">В Работе</div>}*/}
+                {/*{status === 'testing' && <div className="task__status-item status status--yellow">Тестирование</div>}*/}
+                {/*{status === 'complete' && <div className="task__status-item status status--green">Сделано</div>}*/}
             </div>
 
-            <Rank rank={rank}/>
+            <Rank2 rank={rank}/>
+            {/*<Rank rank={rank}/>*/}
 
             <div className="task__btn">
                 {/* Особенность хука useOnClickOutside - повторное нажатие на кнопку открытия меню не приводит к его закрытию)

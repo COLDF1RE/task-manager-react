@@ -6,7 +6,7 @@ const Dropdown = ({change, title, values, form, inputType, clickInsideCloseMenu,
     const [menuActive, setMenuActive] = useState(false)
 
     function dropdownName(defaultName, name) {
-        //Когда не выбран не один чекбокс
+        //Когда не выбран ни один чекбокс
         if (form[name]?.length === 0) {
             return defaultName
         //Когда выбрано больше 1

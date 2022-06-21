@@ -1,0 +1,45 @@
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 3px 6px;
+  &:hover {
+    background-color: #E6E1FF;
+  }
+  & span {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    color: #333333;
+  }
+  &__input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+  & span::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    background-color: #ffffff;
+  }
+}
+.custom-checkbox>input:not(:disabled):not(:checked)+span:hover::before {
+  border-color: #7B61FF;
+}
+.custom-checkbox>input:checked+span::before {
+  border-color: #7B61FF;
+  background-color: #7B61FF;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 13'%3e%3cpath fill='%23f4f4f4'  d='M4.31511 6.01668L0.200185 0H3.18072L5.99444 4.32623L8.81928 0H11.7887L7.65153 6.01668L12 12.3114H9.00834L5.99444 7.69601L2.96942 12.3114H0L4.31511 6.01668Z'/%3e%3c/svg%3e");
+}
+.custom-checkbox>input:disabled+span::before {
+  background-color: #B5B5B5;
+}

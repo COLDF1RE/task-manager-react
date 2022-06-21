@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import {pages} from "../router/pages";
 import {Link, useLocation, useParams} from "react-router-dom";
 import BoardUserList from "../components/BoardUserList";

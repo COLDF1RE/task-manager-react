@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {pages} from "../router/pages";
-import TaskFilter from "../components/TaskFilter";
-import Task from "../components/Task";
+import TaskFilter from "../components/TaskFilter/TaskFilter";
+import Task from "../components/Task/Task";
 import EmptyList from "../components/EmptyList";
 import Pagination from "../components/UI/Pagination";
 import {events} from "../store/store";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import usePagination from "../hooks/usePagination";
 import {observer} from "mobx-react";
 import Footer from "../components/Footer";
@@ -62,7 +62,7 @@ const Tasks = observer(() => {
                             tasks.slice(firstContentIndex, lastContentIndex)
                                 .map(task =>
                                     <Task task={task} key={task.id}
-                                          username={getUserName(task.assignedId) !== undefined ? getUserName(task.assignedId).username : getUserName(task.userId)}/>
+                                            username={getUserName(task.assignedId) !== undefined ? getUserName(task.assignedId).username : getUserName(task.userId)}/>
                                 )
                             :
                             <EmptyList/>

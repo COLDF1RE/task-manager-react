@@ -6,4 +6,5 @@ export const pages = {
     taskAdd: '/task/event/',
     users: '/users',
     usersId: '/users/:id?',
+    testUI: '/ui'
 };

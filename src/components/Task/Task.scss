@@ -1,0 +1,62 @@
+@mixin z-index {
+  @for $i from 1 through 99 {
+    &:nth-child(#{$i}) {
+      z-index: -$i;
+    }
+  }
+}
+
+.task {
+  flex: 1;
+  max-height: 64px;
+  display: flex;
+  padding: 0 30px;
+  align-items: center;
+  @include z-index;
+  &:nth-child(2n) {
+    background-color: #F2F2F2;
+  }
+  &__img {
+    max-width:  70px;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    margin-right: 14px;
+  }
+  &__title {
+    max-width:  530px;
+    width: 100%;
+    margin-right: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  &__username {
+    max-width:  180px;
+    width: 100%;
+    margin-right: 14px;
+  }
+  &__status {
+    max-width:  120px;
+    width: 100%;
+    display: flex;
+    margin-right: 14px;
+  }
+  &__btn {
+    max-width:  85px;
+    width: 100%;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    justify-content: end;
+    &-img {
+      display: flex;
+    }
+  }
+}
+
+.task__btn .menu {
+  top: 22px;
+}

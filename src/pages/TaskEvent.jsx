@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import {events} from "../store/store";
 import {useHistory, useParams} from "react-router-dom";
 import {observer} from "mobx-react";

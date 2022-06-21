@@ -1,7 +1,8 @@
 import React from 'react';
 import {useState} from 'react';
-import {events} from "../store/store";
-import Dropdown from "./UI/Dropdown";
+import {events} from "../../store/store";
+import Dropdown from "../UI/Dropdown";
+import './TaskFilter.scss'
 
 const TaskFilter = ({users}) => {
 
@@ -12,6 +13,32 @@ const TaskFilter = ({users}) => {
     const rankTitle = {defaultName: 'Приоритет', name: 'rank'}
     const userTitle = {defaultName: 'Пользователь', name: 'assignedUsers'}
     const statusTitle = {defaultName: 'Статус', name: 'status'}
+
+    // const type = {
+    //     task: 'Задача',
+    //     bug: 'Ошибка'
+    // }
+    // const rank = {
+    //     low: 'Низкий',
+    //     medium: 'Средний',
+    //     high: 'Высокий',
+    // }
+    // const status = {
+    //     opened: 'Открыто',
+    //     inProgress: 'В работе',
+    //     testing: 'Тестирование',
+    //     complete: 'Сделано',
+    // }
+    // const form = {
+    //     query: '',
+    //         assignedUsers: [],
+    //         userIds: [],
+    //         type: [],
+    //         status: [],
+    //         rank: []
+    // },
+
+
 
     const [form, setForm] = useState({
         query: '',
@@ -41,6 +68,7 @@ const TaskFilter = ({users}) => {
     return (
         <form className="board-filter" onSubmit={handleSubmit}>
             <Dropdown change={handleFieldChange} form={form} values={type} title={typeTitle} className={'board-filter__type board-filter__item'}/>
+
             <fieldset className="board-filter__query board-filter__item">
                 <input className="board-filter__query-input" type="text" value={form.query} name="query" onChange={handleFieldChange} placeholder="Название задачи"/>
             </fieldset>

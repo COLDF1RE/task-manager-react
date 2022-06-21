@@ -3,7 +3,7 @@ import Pagination from "./UI/Pagination";
 import Modal from "./Modal";
 import {useHistory} from "react-router-dom";
 import {events} from "../store/store"
-import Task from "./Task";
+import Task from "./Task/Task";
 import {observer} from "mobx-react";
 import usePagination from "../hooks/usePagination";
 import EmptyList from "./EmptyList";
