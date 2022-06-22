@@ -1,12 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import Modal from "./Modal";
+import Modal from "../Modal/Modal";
 import {useParams} from "react-router-dom";
-import Comment from "./Comment";
-import {events} from "../store/store";
+import Comment from "../Comment/Comment";
+import {events} from "../../store/store";
 import {observer} from "mobx-react";
-import Dropdown from "./UI/Dropdown";
+import Dropdown from "../UI/Dropdown/Dropdown";
 import moment from "moment";
 import "moment/locale/ru";
+import MyButton from "../UI/MyButton/MyButton";
+import MyTextarea from "../UI/MyTextarea/MyTextarea";
+import './BoardTaskOpen.scss'
+import MyInput from "../UI/MyInput/MyInput";
+import Dropdown2 from "../UI/Dropdown2/Dropdown2";
+import Checkbox from "../UI/Checkbox/Checkbox";
 
 
 const BoardTaskOpen = observer(({currentTask, users}) => {
@@ -14,8 +20,22 @@ const BoardTaskOpen = observer(({currentTask, users}) => {
     const {id} = useParams()
     const [modalActive, setModalActive] = useState(false)
 
-    const measureUnit = [{value: 'minutes', name: 'Минуты'}, {value: 'hours', name: 'Часы'}, {value: 'days', name: 'Дни'},]
-    const measureUnitTitle = {defaultName: 'Выбрать', name: 'measureUnit'}
+    // const measureUnit = [{value: 'minutes', name: 'Минуты'}, {value: 'hours', name: 'Часы'}, {value: 'days', name: 'Дни'},]
+    // const measureUnitTitle = {defaultName: 'Выбрать', name: 'measureUnit'}
+    const measureUnit= {
+        minutes: 'Минуты',
+        hours: 'Часы',
+        days: 'Дни',
+    }
+    const type = {
+        task: 'Задача',
+        bug: 'Ошибка'
+    }
+    const rank = {
+        low: 'Низкий',
+        medium: 'Средний',
+        high: 'Высокий',
+    }
 
     useEffect(() => {
         events.getComments(id)
@@ -49,7 +69,7 @@ const BoardTaskOpen = observer(({currentTask, users}) => {
         return `${dDisplay} ${hDisplay} ${mDisplay}`
     }
 
-    /////////////////////// WORKTIME FORM ///////////////////////////
+    /////////////////////// WORKTIME FORM MODAL ///////////////////////////
 
     const [worktimeForm, setWorktimeForm] = useState({
         timeInMinutes: 0,
@@ -78,6 +98,13 @@ const BoardTaskOpen = observer(({currentTask, users}) => {
         })
     }
 
+    function getDropdownTitle (arr, defaultTitle, constsObj) {
+        if (arr.length === 0) {
+            return defaultTitle
+        } else {
+            return constsObj[arr]
+        }
+    }
     //////////////////////// COMMENT FORM ////////////////////////////
 
     const [commentForm, setCommentForm] = useState({
@@ -104,6 +131,9 @@ const BoardTaskOpen = observer(({currentTask, users}) => {
         await events.getComments(id)
     }
 
+    const dateOfCreation = moment(currentTask.dateOfCreation).format('DD.MM.YYYY HH:mm')
+    const dateOfUpdate = moment(currentTask.dateOfUpdate).format('DD.MM.YYYY HH:mm')
+    const timeIsSpent = minutesToDHM(currentTask.timeInMinutes)
 
     return (
         <>
@@ -121,26 +151,29 @@ const BoardTaskOpen = observer(({currentTask, users}) => {
 
                     <h4 className="task-open__info-title">Тип запроса</h4>
                     <p className="task-open__info-text">
-                        {currentTask.type === 'bug' && 'Ошибка' || currentTask.type === 'task' && 'Задача'}
+                        {type[currentTask.type]}
                     </p>
 
                     <h4 className="task-open__info-title">Приоритет</h4>
                     <p className="task-open__info-text">
-                        {currentTask.rank === 'low' && 'Низкий' || currentTask.rank === 'medium' && 'Средний' || currentTask.rank === 'high' && 'Высокий'}
+                        {rank[currentTask.rank]}
                     </p>
 
                     <h4 className="task-open__info-title">Дата создания</h4>
-                    <p className="task-open__info-text">{moment(currentTask.dateOfCreation).format('DD.MM.YYYY HH:mm')}</p>
+                    {/*<p className="task-open__info-text">{moment(currentTask.dateOfCreation).format('DD.MM.YYYY HH:mm')}</p>*/}
+                    <p className="task-open__info-text">{dateOfCreation}</p>
 
                     <h4 className="task-open__info-title">Дата изменения</h4>
-                    <p className="task-open__info-text">{moment(currentTask.dateOfUpdate).format('DD.MM.YYYY HH:mm')}</p>
+                    {/*<p className="task-open__info-text">{moment(currentTask.dateOfUpdate).format('DD.MM.YYYY HH:mm')}</p>*/}
+                    <p className="task-open__info-text">{dateOfUpdate}</p>
 
                     <h4 className="task-open__info-title">Затрачено времени</h4>
-                    <p className="task-open__info-text">{minutesToDHM(currentTask.timeInMinutes)}</p>
+                    {/*<p className="task-open__info-text">{minutesToDHM(currentTask.timeInMinutes)}</p>*/}
+                    <p className="task-open__info-text">{timeIsSpent}</p>
 
-                    <button className="task-open__info-bnt button button--primary"
-                            onClick={() => setModalActive(true)}>Сделать запись о работе
-                    </button>
+                    <MyButton className="task-open__info-bnt button--primary" onClick={() => setModalActive(true)}>
+                        Сделать запись о работе
+                    </MyButton>
                 </div>
 
                 <div className="task-open__description">
@@ -151,11 +184,14 @@ const BoardTaskOpen = observer(({currentTask, users}) => {
                 <div className="task-open__comments">
                     <h4 className="task-open__comments-title">{`Комментарии (${events.comments.length})`}</h4>
                     <form onSubmit={handleCommentSubmit}>
-                        <textarea value={commentForm.text} onChange={changeCommentForm} required name="" id="" cols="30"
-                                  rows="10" className="task-open__comments-textarea"/>
-                        <button type="submit" className="task-open__comments-btn button button--success">Добавить
-                            комментарий
-                        </button>
+                        <MyTextarea
+                            value={commentForm.text}
+                            onChange={changeCommentForm}
+                            className="task-open__comments-textarea"
+                        />
+                        <MyButton type="submit" className="task-open__comments-btn button button--success">
+                            Добавить комментарий
+                        </MyButton>
                     </form>
 
                     <div className="task-open__comments-wrapper">
@@ -175,34 +211,49 @@ const BoardTaskOpen = observer(({currentTask, users}) => {
                     <div className="modal__window-body">
 
                         <label htmlFor="timeInMinutes" className="modal__window-subtitle">Затраченное время</label>
-                        <input
+                        <MyInput
                             id="timeInMinutes"
                             className="modal__window-input"
                             onChange={handleFieldChangeWorktime}
                             name="timeInMinutes"
                             value={worktimeForm.timeInMinutes}
-                            required
                             type="number"
                         />
 
                         <label htmlFor='measureUnit' className="modal__window-subtitle">Единицы измерения</label>
-                        <Dropdown change={handleFieldChangeWorktime} form={worktimeForm} values={measureUnit} title={measureUnitTitle} clickInsideCloseMenu={true} inputType={'radio'} className={'modal__window-select'}/>
+                        {/*<Dropdown change={handleFieldChangeWorktime} form={worktimeForm} values={measureUnit} title={measureUnitTitle} clickInsideCloseMenu={true} inputType={'radio'} className={'modal__window-select'}/>*/}
+                        <Dropdown2
+                            className={'modal__window-select'}
+                            title={
+                                getDropdownTitle(worktimeForm.measureUnit, '', measureUnit)
+                            }
+                            body={
+                                Object.entries(measureUnit).map(([key, value]) =>
+                                    <Checkbox
+                                        key={key}
+                                        value={key}
+                                        title={value}
+                                        checkedItems={worktimeForm.measureUnit}
+                                        onChange={handleFieldChangeWorktime}
+                                        inputType="radio"
+                                        name="measureUnit"
+                                    />
+                                )
+                            }
+                        />
 
                         <label htmlFor='comment' className="modal__window-subtitle">Комментарии</label>
-                        <textarea
+                        <MyTextarea
                             id="comment"
                             className="modal__window-textarea"
                             onChange={handleFieldChangeWorktime}
                             name="comment"
                             value={worktimeForm.comment}
-                            required
                         />
                     </div>
                     <div className="modal__window-buttons">
-                        <button type="submit" className="modal__window-submit button button--primary">Добавить</button>
-                        <button className="modal__window-cancel button button-default"
-                                onClick={() => setModalActive(false)}>Отмена
-                        </button>
+                        <MyButton type="submit" className="modal__window-submit button--primary">Добавить</MyButton>
+                        <MyButton className="modal__window-cancel button-default" onClick={() => setModalActive(false)}>Отмена</MyButton>
                     </div>
                 </form>
             </Modal>

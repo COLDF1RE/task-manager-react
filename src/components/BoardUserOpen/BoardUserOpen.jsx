@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
-import Pagination from "./UI/Pagination";
-import Modal from "./Modal";
+import Pagination from "../UI/Pagination/Pagination";
+import Modal from "../Modal/Modal";
 import {useHistory} from "react-router-dom";
-import {events} from "../store/store"
-import Task from "./Task/Task";
+import {events} from "../../store/store"
+import Task from "../Task/Task";
 import {observer} from "mobx-react";
-import usePagination from "../hooks/usePagination";
-import EmptyList from "./EmptyList";
+import usePagination from "../../hooks/usePagination";
+import EmptyList from "../UI/EmptyList/EmptyList";
+import MyInput from "../UI/MyInput/MyInput";
+import MyTextarea from "../UI/MyTextarea/MyTextarea";
+import MyButton from "../UI/MyButton/MyButton";
+import './BoardUserOpen.scss'
 
 
 const BoardUserOpen = observer(({currentUser, modalActive, setModalActive}) => {
@@ -101,17 +105,16 @@ const BoardUserOpen = observer(({currentUser, modalActive, setModalActive}) => {
                 <div className="modal__window-body">
 
                     <label htmlFor="username" className="modal__window-subtitle">Имя пользователя</label>
-                    <input
+                    <MyInput
                         id="username"
                         className="modal__window-input"
                         onChange={handleFieldChange}
                         name="username"
                         value={form.username}
-                        required
                     />
 
                     <label htmlFor="photoUrl" className="modal__window-subtitle">URL фотографии</label>
-                    <input
+                    <MyInput
                         id="photoUrl"
                         className="modal__window-input"
                         onChange={handleFieldChange}
@@ -120,7 +123,7 @@ const BoardUserOpen = observer(({currentUser, modalActive, setModalActive}) => {
                     />
 
                     <label htmlFor="about" className="modal__window-subtitle">О себе</label>
-                    <textarea
+                    <MyTextarea
                         id="about"
                         className="modal__window-textarea"
                         onChange={handleFieldChange}
@@ -130,8 +133,8 @@ const BoardUserOpen = observer(({currentUser, modalActive, setModalActive}) => {
 
                 </div>
                 <div className="modal__window-buttons">
-                    <button className="modal__window-submit button button--primary">Добавить</button>
-                    <button className="modal__window-cancel button button-default" onClick={()=>setModalActive(false)}>Отмена</button>
+                    <MyButton className="modal__window-submit button--primary">Добавить</MyButton>
+                    <MyButton className="modal__window-cancel button-default" onClick={()=>setModalActive(false)}>Отмена</MyButton>
                 </div>
                 </form>
             </Modal>

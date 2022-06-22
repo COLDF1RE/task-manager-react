@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Menu from "./Menu";
+import Menu from "../Menu/Menu";
 
 const Dropdown = ({change, title, values, form, inputType, clickInsideCloseMenu, className}) => {
 

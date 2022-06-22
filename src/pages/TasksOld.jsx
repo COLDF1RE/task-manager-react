@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../components/Header/Header";
-import BoardTaskOpen from "../components/BoardTaskOpen";
-import BoardTaskForm from "../components/BoardTaskForm";
+import BoardTaskOpen from "../components/BoardTaskOpen/BoardTaskOpen";
+import BoardTaskForm from "../components/BoardTaskForm/BoardTaskForm";
 import {useLocation, useParams, useHistory} from "react-router-dom";
 import {pages} from "../router/pages";
 // import TaskList from "../components/TaskList";
@@ -10,8 +10,8 @@ import {observer} from 'mobx-react';
 import {events} from "../store/store";
 import TaskFilter from "../components/TaskFilter/TaskFilter";
 import Task from "../components/Task/Task";
-import EmptyList from "../components/EmptyList";
-import Pagination from "../components/UI/Pagination";
+import EmptyList from "../components/UI/EmptyList/EmptyList";
+import Pagination from "../components/UI/Pagination/Pagination";
 import usePagination from "../hooks/usePagination";
 
 

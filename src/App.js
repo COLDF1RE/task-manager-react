@@ -4,14 +4,14 @@ import './styles/style.scss';
 import Login from "./pages/Login";
 import TasksOld from "./pages/TasksOld";
 import Users from "./pages/Users";
-import Error404 from "./pages/Error404";
+import Error404 from "./pages/Error404/Error404";
 import {pages} from "./router/pages";
 import TaskEvent from "./pages/TaskEvent";
 import {events} from "./store/store";
 import {observer} from "mobx-react";
 import Tasks from "./pages/Tasks";
 import TaskOpen from "./pages/TaskOpen";
-import TestUi from "./pages/TestUI";
+import TestUi from "./pages/TestUI/TestUI";
 
 
 const App = observer(() => {

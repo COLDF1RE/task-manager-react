@@ -5,7 +5,7 @@ const Status = ({status}) => {
 
     const theStatus = {
         opened: {className: 'status--default', title: 'Открыто'},
-        inProgress: {className: 'status--yellow', title: 'Работе'},
+        inProgress: {className: 'status--yellow', title: 'В Работе'},
         testing: {className: 'status--yellow', title: 'Тестирование'},
         complete: {className: 'status--green', title: 'Сделано'},
     }

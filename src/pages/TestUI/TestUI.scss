@@ -1,0 +1,22 @@
+.ui-page {
+  //font-family: 'Roboto', sans-serif;
+  //font-style: normal;
+  //font-weight: 400;
+  //font-size: 16px;
+  //line-height: 19px;
+  background-color: #E5E5E5;
+  padding: 50px;
+
+  &__title {
+    margin: 20px 0 5px;
+    font-size: 25px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &__subtitle {
+    margin: 40px 0 10px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}

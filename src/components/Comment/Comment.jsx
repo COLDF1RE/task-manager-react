@@ -1,6 +1,7 @@
 import React from 'react';
-import {events} from "../store/store";
+import {events} from "../../store/store";
 import moment from "moment";
+import './Comment.scss'
 
 const Comment = ({comment, username}) => {
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import {pages} from "../router/pages"
+import {pages} from "../../router/pages"
 import {Link} from "react-router-dom";
-import {events} from "../store/store";
+import {events} from "../../store/store";
+import './Error404.scss'
 
 const Error404 = () => {
 

@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {pages} from "../../router/pages";
 import {events} from "../../store/store";
-import Menu from "../UI/Menu";
-import Rank from "../UI/Rank";
+import Menu from "../UI/Menu/Menu";
+import Rank from "../UI/Rank/Rank";
 import './Task.scss'
 import Status from "../UI/Status/Status";
 import Rank2 from "../UI/Rank2/Rank2";

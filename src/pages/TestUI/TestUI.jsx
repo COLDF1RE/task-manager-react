@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer";
-import Board from "../components/UI/Board/Board";
-import Wrapper from "../components/UI/Wrapper/Wrapper";
-import MyButton from "../components/UI/MyButton/MyButton";
-import Rank from "../components/UI/Rank";
-import Status from "../components/UI/Status/Status";
-import Rank2 from "../components/UI/Rank2/Rank2";
-import MyInput from "../components/UI/MyInput/MyInput";
-import MyTextarea from "../components/UI/MyTextarea/MyTextarea";
-import Menu2 from "../components/UI/Menu2/Menu2";
-import Dropdown2 from "../components/UI/Dropdown2/Dropdown2";
-import Checkbox from "../components/UI/Checkbox/Checkbox";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Board from "../../components/UI/Board/Board";
+import Wrapper from "../../components/UI/Wrapper/Wrapper";
+import MyButton from "../../components/UI/MyButton/MyButton";
+import Rank from "../../components/UI/Rank/Rank";
+import Status from "../../components/UI/Status/Status";
+import Rank2 from "../../components/UI/Rank2/Rank2";
+import MyInput from "../../components/UI/MyInput/MyInput";
+import MyTextarea from "../../components/UI/MyTextarea/MyTextarea";
+import Menu2 from "../../components/UI/Menu2/Menu2";
+import Dropdown2 from "../../components/UI/Dropdown2/Dropdown2";
+import Checkbox from "../../components/UI/Checkbox/Checkbox";
+import './TestUI.scss'
 
 const TestUi = () => {
 
@@ -90,7 +91,7 @@ const TestUi = () => {
                 <h2 className="ui-page__subtitle">MyInput:{form.inputText}</h2>
                 <MyInput
                     value={form.inputText}
-                    change={handleFieldChange}
+                    onChange={handleFieldChange}
                     name="inputText"
                     placeholder={"Введите текст"}
                 />
@@ -98,7 +99,7 @@ const TestUi = () => {
                 <h2 className="ui-page__subtitle">MyTextarea:{form.textareaText}</h2>
                 <MyTextarea
                     value={form.textareaText}
-                    change={handleFieldChange}
+                    onChange={handleFieldChange}
                     name="textareaText"
                     placeholder={"Введите текст"}
                 />
@@ -111,7 +112,7 @@ const TestUi = () => {
                         value={key}
                         title={value}
                         checkedItems={formFilter.type}
-                        change={changeFormFilter}
+                        onChange={changeFormFilter}
                         name="type"
                     />
                 )}
@@ -143,7 +144,7 @@ const TestUi = () => {
                                 value={key}
                                 title={value}
                                 checkedItems={formFilter.type}
-                                change={changeFormFilter}
+                                onChange={changeFormFilter}
                                 name="type"
                             />
                         )

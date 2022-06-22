@@ -2,11 +2,14 @@ import React, {useEffect, useState} from 'react';
 import Header from "../components/Header/Header";
 import {pages} from "../router/pages";
 import {Link, useLocation, useParams} from "react-router-dom";
-import BoardUserList from "../components/BoardUserList";
-import BoardUserOpen from "../components/BoardUserOpen";
+import BoardUserList from "../components/BoardUserList/BoardUserList";
+import BoardUserOpen from "../components/BoardUserOpen/BoardUserOpen";
 import {observer} from "mobx-react";
 import {events} from "../store/store";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
+import Board from "../components/UI/Board/Board";
+import BoardHeader from "../components/BoardHeader/BoardHeader";
+import MyButton from "../components/UI/MyButton/MyButton";
 
 
 const Users = observer(() => {
@@ -29,36 +32,45 @@ const Users = observer(() => {
                 {/*/////////////////////////// USERS /////////////////////////*/}
                 {pathname === pages.users &&
                 <>
-                    <section className="board-header">
-                        <div className="board-header__info">
-                            <h1 className="board-header__info-title">Пользователи</h1>
-                        </div>
-                    </section>
-
-                    <section className="board">
+                    <BoardHeader title={<h1 className="board-header__info-title">Пользователи</h1>}/>
+                    <Board>
                         <BoardUserList users={users}/>
-                    </section>
+                    </Board>
                 </>
                 }
 
                 {/*////////////////////////// USER-OPEN /////////////////////*/}
                 {id &&
                 <>
-                    <section className="board-header">
-                        <div className="board-header__info">
-                            <h1 className="board-header__info-title">{currentUser.username}</h1>
-                        </div>
-                        <div className="board-header__options">
-                            <Link to={pages.taskAdd} className="board-header__options-btn button button--default">Добавить задачу</Link>
-                            <button className="board-header__options-btn button button--primary"
-                                    onClick={() => setModalActive(true)}>Редактировать
-                            </button>
-                        </div>
-                    </section>
+                    <BoardHeader
+                        title={<h1 className="board-header__info-title">{currentUser.username}</h1>}
+                        buttons={
+                            <>
+                            <MyButton className="board-header__options-btn button--default">
+                                <Link to={pages.taskAdd} >Добавить задачу</Link>
+                            </MyButton>
+                            <MyButton className="board-header__options-btn button--primary" onClick={() => setModalActive(true)}>
+                                Редактировать
+                            </MyButton>
+                            </>
+                        }
+                    />
 
-                    <section className="board">
+                    {/*<section className="board-header">*/}
+                    {/*    <div className="board-header__info">*/}
+                    {/*        <h1 className="board-header__info-title">{currentUser.username}</h1>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="board-header__options">*/}
+                    {/*        <Link to={pages.taskAdd} className="board-header__options-btn button button--default">Добавить задачу</Link>*/}
+                    {/*        <button className="board-header__options-btn button button--primary"*/}
+                    {/*                onClick={() => setModalActive(true)}>Редактировать*/}
+                    {/*        </button>*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
+
+                    <Board>
                         <BoardUserOpen currentUser={currentUser} modalActive={modalActive} setModalActive={setModalActive}/>
-                    </section>
+                    </Board>
                 </>
                 }
             </div>

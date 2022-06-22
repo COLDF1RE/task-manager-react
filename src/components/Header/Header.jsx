@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link, useHistory} from "react-router-dom";
 import {pages} from "../../router/pages";
-import Menu from "../UI/Menu";
+import Menu from "../UI/Menu/Menu";
 import {events} from "../../store/store";
 import './Header.scss'
 

@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
-import {events} from "../store/store";
+import {events} from "../../store/store";
 import {useHistory} from "react-router-dom";
 import {observer} from "mobx-react";
+import './LoginForm.scss'
+import MyInput from "../UI/MyInput/MyInput";
+import MyButton from "../UI/MyButton/MyButton";
 
 
 const LoginForm = () => {
@@ -34,14 +37,24 @@ const LoginForm = () => {
             <div className="login__title">Авторизация</div>
 
             <label className="login__input-title">Логин</label>
-            <input onChange={handleFieldChange} value={loginForm.login} name={'login'} required type="text"
-                   className="login__input"/>
+            <MyInput
+                onChange={handleFieldChange}
+                value={loginForm.login}
+                name={'login'}
+                type="text"
+                className="login__input"
+            />
 
             <label className="login__input-title">Пароль</label>
-            <input onChange={handleFieldChange} value={loginForm.password} name={'password'} required type="password"
-                   className="login__input"/>
+            <MyInput
+                onChange={handleFieldChange}
+                value={loginForm.password}
+                name={'password'}
+                type="password"
+                className="login__input"
+            />
 
-            <button type="submit" className="login__btn button button--success">Вход</button>
+            <MyButton type="submit" className="login__btn button button--success">Вход</MyButton>
         </form>
     );
 };

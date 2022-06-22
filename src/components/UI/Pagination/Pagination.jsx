@@ -1,4 +1,6 @@
 import React from 'react';
+import MyButton from "../MyButton/MyButton";
+import './Pagination.scss'
 
 const Pagination = ({
                         nextPage,
@@ -13,24 +15,24 @@ const Pagination = ({
     return (
         <div className="pagination">
             <div className="pagination__nav">
-                <button
+                <MyButton
                     className={`pagination__nav-prev button ${page === 1 ? "button--disabled" : "button--default"}`}
                     onClick={prevPage}
                 >Назад
-                </button>
+                </MyButton>
                 {[...Array(totalPages).keys()].map((el) => (
-                    <button
+                    <MyButton
                         className={`pagination__nav-page button ${page === el + 1 ? "button--primary" : "button--default"}`}
                         onClick={() => setPage(el + 1)}
                         key={el}
                     >{el + 1}
-                    </button>
+                    </MyButton>
                 ))}
-                <button
+                <MyButton
                     className={`pagination__nav-next button ${page === totalPages ? "button--disabled" : "button--default"}`}
                     onClick={nextPage}
                 >Вперед
-                </button>
+                </MyButton>
             </div>
             <div className="pagination__info">
                 {`Показано ${firstContentIndex + 1} - ${lastContentIndex <= tasksLength ? lastContentIndex : tasksLength} из ${tasksLength}`}

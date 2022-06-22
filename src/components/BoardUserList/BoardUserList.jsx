@@ -1,8 +1,9 @@
 import React from 'react';
-import usePagination from "../hooks/usePagination";
-import User from "./User/User";
-import EmptyList from "./EmptyList";
-import Pagination from "./UI/Pagination";
+import usePagination from "../../hooks/usePagination";
+import User from "../User/User";
+import EmptyList from "../UI/EmptyList/EmptyList";
+import Pagination from "../UI/Pagination/Pagination";
+import Wrapper from "../UI/Wrapper/Wrapper";
 
 const BoardUserList = ({users}) => {
 
@@ -21,13 +22,13 @@ const BoardUserList = ({users}) => {
 
     return (
         <>
-            <div className="tasks-wrapper">
+            <Wrapper>
                 {users.length ?
                     users.slice(firstContentIndex, lastContentIndex).map(user => <User user={user} key={user.id}/>)
                     :
                     <EmptyList/>
                 }
-            </div>
+            </Wrapper>
             <Pagination
                 nextPage={nextPage}
                 prevPage={prevPage}

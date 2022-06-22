@@ -1,0 +1,25 @@
+.rank {
+  max-width: 120px;
+  width: 100%;
+  margin-right: 14px;
+  display: flex;
+  align-items: center;
+  &__icon {
+    display: flex;
+    align-items: center;
+  }
+  &__text {
+    margin-left: 4px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  &__text--red {
+    color: #D14343;
+  }
+  &__text--green {
+    color: #3CA961;
+  }
+  &__text--yellow {
+    color: #E9B500;
+  }
+}

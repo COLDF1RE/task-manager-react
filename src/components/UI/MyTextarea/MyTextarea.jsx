@@ -1,12 +1,12 @@
 import React from 'react';
 import './MyTextarea.scss'
 
-const MyTextarea = ({value, change, name, placeholder}) => {
+const MyTextarea = ({value, onChange, name, placeholder, className}) => {
     return (
         <textarea
-            className="textarea"
+            className={`textarea ${className}`}
             value={value}
-            onChange={change}
+            onChange={onChange}
             placeholder={placeholder}
             name={name}
         />
