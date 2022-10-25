@@ -1,0 +1,32 @@
+.board-header {
+  padding: 30px 20px 20px;
+  max-width: 1320px;
+  min-height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  &__info {
+    display: flex;
+    align-items: center;
+    &-title {
+      font-weight: 300;
+      font-size: 24px;
+      line-height: 28px;
+      margin-right: 10px;
+    }
+    &-title span {
+      margin-left: 10px;
+    }
+  }
+  &__options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+    &-btn {
+      margin-right: 5px;
+      margin-bottom: 5px;
+      white-space: nowrap;
+    }
+  }
+}

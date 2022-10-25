@@ -1,15 +1,19 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {pages} from "../router/pages";
-import TaskFilter from "../components/TaskFilter";
-import Task from "../components/Task";
-import EmptyList from "../components/EmptyList";
-import Pagination from "../components/UI/Pagination";
+import TaskFilter from "../components/TaskFilter/TaskFilter";
+import Task from "../components/Task/Task";
+import EmptyList from "../components/UI/EmptyList/EmptyList";
+import Pagination from "../components/UI/Pagination/Pagination";
 import {events} from "../store/store";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import usePagination from "../hooks/usePagination";
 import {observer} from "mobx-react";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
+import BoardHeader from "../components/BoardHeader/BoardHeader";
+import Wrapper from "../components/UI/Wrapper/Wrapper";
+import Board from "../components/UI/Board/Board";
+import MyButton from "../components/UI/MyButton/MyButton";
 
 const Tasks = observer(() => {
 
@@ -45,29 +49,39 @@ const Tasks = observer(() => {
             <Header tasksActive={true}/>
 
             <div className="main">
-                <section className="board-header">
-                    <div className="board-header__info">
-                        <h1 className="board-header__info-title">Задачи</h1>
-                    </div>
-                    <div className="board-header__options">
-                        <Link to={pages.taskAdd} className="board-header__options-btn button button--primary">Добавить задачу</Link>
-                    </div>
-                </section>
 
-                <section className="board">
+                <BoardHeader
+                    title={<h1 className="board-header__info-title">Задачи</h1>}
+                    buttons={
+                        <MyButton className="board-header__options-btn button button--primary">
+                            <Link to={pages.taskAdd}>Добавить задачу</Link>
+                        </MyButton>
+                    }
+                />
+
+                {/*<section className="board-header">*/}
+                {/*    <div className="board-header__info">*/}
+                {/*        <h1 className="board-header__info-title">Задачи</h1>*/}
+                {/*    </div>*/}
+                {/*    <div className="board-header__options">*/}
+                {/*        <Link to={pages.taskAdd} className="board-header__options-btn button button--primary">Добавить задачу</Link>*/}
+                {/*    </div>*/}
+                {/*</section>*/}
+
+                <Board>
                     <TaskFilter users={users}/>
 
-                    <div className="tasks-wrapper">
+                    <Wrapper className="tasks-wrapper">
                         {tasks.length ?
                             tasks.slice(firstContentIndex, lastContentIndex)
                                 .map(task =>
                                     <Task task={task} key={task.id}
-                                          username={getUserName(task.assignedId) !== undefined ? getUserName(task.assignedId).username : getUserName(task.userId)}/>
+                                            username={getUserName(task.assignedId) !== undefined ? getUserName(task.assignedId).username : getUserName(task.userId)}/>
                                 )
                             :
                             <EmptyList/>
                         }
-                    </div>
+                    </Wrapper>
 
                     <Pagination
                         nextPage={nextPage}
@@ -80,7 +94,7 @@ const Tasks = observer(() => {
                         page={page}
                         setPage={setPage}
                     />
-                </section>
+                </Board>
             </div>
 
             <Footer/>

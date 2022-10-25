@@ -1,0 +1,56 @@
+.dropdown {
+  position: relative;
+  &__button {
+    width: 100%;
+    height: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    color: #CCCCCC;
+    border-radius: 3px;
+    z-index: 5;
+    position: relative;
+    box-shadow: inset 0 0 2px 1px #B5B5B5;
+    background-color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    &:hover {
+      box-shadow: inset 0 0 2px 1px #7B61FF;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 6px;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 6'%3e%3cpath fill='%23B5B5B5'  d='M3.07861 6L0 0H1.82084L3.48812 3.52304C3.59537 3.74706 3.69287 3.98916 3.78062 4.24932C3.86837 4.50948 3.92931 4.72809 3.96344 4.90515H4.02194C4.05606 4.72087 4.12188 4.50045 4.21938 4.2439C4.31688 3.98374 4.41682 3.74345 4.5192 3.52304L6.18647 0H8L4.92139 6H3.07861Z'/%3e%3c/svg%3e");
+      right: 6px;
+    }
+  }
+  &__list {
+    top: -5px;
+    right: -5px;
+    padding: 35px 0px 5px;
+    width: calc(100% + 10px);
+    background-color: #ffffff;
+    box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
+    border-radius: 5px;
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    position: absolute;
+    z-index: 1;
+    &-item {
+      padding: 0 5px;
+      &:hover {
+        background-color: #E6E1FF;
+      }
+      &:active {
+        background-color: #7B61FF;
+        color: #F4F4F4;
+      }
+    }
+  }
+}

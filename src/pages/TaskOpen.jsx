@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
 import {Link, useHistory, useParams} from "react-router-dom";
-import BoardTaskOpen from "../components/BoardTaskOpen";
+import BoardTaskOpen from "../components/BoardTaskOpen/BoardTaskOpen";
 import {events} from "../store/store";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import {observer} from "mobx-react";
 import {pages} from "../router/pages";
-import Footer from "../components/Footer";
-import Error404 from "./Error404";
+import Footer from "../components/Footer/Footer";
+import Error404 from "./Error404/Error404";
+import BoardHeader from "../components/BoardHeader/BoardHeader";
+import Status from "../components/UI/Status/Status";
+import MyButton from "../components/UI/MyButton/MyButton";
 
 const TaskOpen = observer(() => {
 
@@ -48,47 +51,81 @@ const TaskOpen = observer(() => {
             <div className="wrapper">
                 <Header tasksActive={true}/>
                 <div className="main">
-                    <section className="board-header">
-                        <div className="board-header__info">
+                    <BoardHeader
+                        title={
                             <h1 className="board-header__info-title">{currentTask.title}
-                                {currentTask.status === 'opened' &&
-                                <span className="board-header__info-status status status--default">Открыто</span>}
-                                {currentTask.status === 'inProgress' &&
-                                <span className="board-header__info-status status status--yellow">В Работе</span>}
-                                {currentTask.status === 'testing' &&
-                                <span className="board-header__info-status status status--yellow">Тестирование</span>}
-                                {currentTask.status === 'complete' &&
-                                <span className="board-header__info-status status status--green">Сделано</span>}
+                                <span><Status status={currentTask.status}/></span>
                             </h1>
-                        </div>
-                        <div className="board-header__options">
-                            {currentTask.status === 'opened' && opened.map(item =>
-                                <button key={item.value} onClick={changeStatusTask} value={item.value}
-                                        className="board-header__options-btn button button--default">{item.name}</button>
-                            )}
-                            {currentTask.status === 'inProgress' && inProgress.map(item =>
-                                <button key={item.value} onClick={changeStatusTask} value={item.value}
-                                        className="board-header__options-btn button button--default">{item.name}</button>
-                            )}
-                            {currentTask.status === 'testing' && testing.map(item =>
-                                <button key={item.value} onClick={changeStatusTask} value={item.value}
-                                        className="board-header__options-btn button button--default">{item.name}</button>
-                            )}
-                            {currentTask.status === 'complete' && complete.map(item =>
-                                <button key={item.value} onClick={changeStatusTask} value={item.value}
-                                        className="board-header__options-btn button button--default">{item.name}</button>
-                            )}
-                            {currentTask.userId === localStorage.getItem('userId') &&
+                        }
+                        buttons={
                             <>
-                                <Link to={pages.taskAdd + id}
-                                      className="board-header__options-btn button button--primary">Редактировать</Link>
-                                <button onClick={deleteTask}
-                                        className="board-header__options-btn button button--error">Удалить
-                                </button>
+                                {currentTask.status === 'opened' && opened.map(item =>
+                                    <MyButton key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button--default">{item.name}</MyButton>
+                                )}
+                                {currentTask.status === 'inProgress' && inProgress.map(item =>
+                                    <MyButton key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button--default">{item.name}</MyButton>
+                                )}
+                                {currentTask.status === 'testing' && testing.map(item =>
+                                    <MyButton key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button--default">{item.name}</MyButton>
+                                )}
+                                {currentTask.status === 'complete' && complete.map(item =>
+                                    <MyButton key={item.value} onClick={changeStatusTask} value={item.value} className="board-header__options-btn button--default">{item.name}</MyButton>
+                                )}
+                                {currentTask.userId === localStorage.getItem('userId') &&
+                                <>
+                                    <MyButton className="board-header__options-btn button button--primary">
+                                        <Link to={pages.taskAdd + id}>Редактировать</Link>
+                                    </MyButton>
+                                    <MyButton onClick={deleteTask} className="board-header__options-btn button--error">
+                                        Удалить
+                                    </MyButton>
+                                </>
+                                }
                             </>
-                            }
-                        </div>
-                    </section>
+                        }
+                    />
+
+                    {/*<section className="board-header">*/}
+                    {/*    <div className="board-header__info">*/}
+                    {/*        <h1 className="board-header__info-title">{currentTask.title}*/}
+                    {/*            {currentTask.status === 'opened' &&*/}
+                    {/*            <span className="board-header__info-status status status--default">Открыто</span>}*/}
+                    {/*            {currentTask.status === 'inProgress' &&*/}
+                    {/*            <span className="board-header__info-status status status--yellow">В Работе</span>}*/}
+                    {/*            {currentTask.status === 'testing' &&*/}
+                    {/*            <span className="board-header__info-status status status--yellow">Тестирование</span>}*/}
+                    {/*            {currentTask.status === 'complete' &&*/}
+                    {/*            <span className="board-header__info-status status status--green">Сделано</span>}*/}
+                    {/*        </h1>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="board-header__options">*/}
+                    {/*        {currentTask.status === 'opened' && opened.map(item =>*/}
+                    {/*            <button key={item.value} onClick={changeStatusTask} value={item.value}*/}
+                    {/*                    className="board-header__options-btn button button--default">{item.name}</button>*/}
+                    {/*        )}*/}
+                    {/*        {currentTask.status === 'inProgress' && inProgress.map(item =>*/}
+                    {/*            <button key={item.value} onClick={changeStatusTask} value={item.value}*/}
+                    {/*                    className="board-header__options-btn button button--default">{item.name}</button>*/}
+                    {/*        )}*/}
+                    {/*        {currentTask.status === 'testing' && testing.map(item =>*/}
+                    {/*            <button key={item.value} onClick={changeStatusTask} value={item.value}*/}
+                    {/*                    className="board-header__options-btn button button--default">{item.name}</button>*/}
+                    {/*        )}*/}
+                    {/*        {currentTask.status === 'complete' && complete.map(item =>*/}
+                    {/*            <button key={item.value} onClick={changeStatusTask} value={item.value}*/}
+                    {/*                    className="board-header__options-btn button button--default">{item.name}</button>*/}
+                    {/*        )}*/}
+                    {/*        {currentTask.userId === localStorage.getItem('userId') &&*/}
+                    {/*        <>*/}
+                    {/*            <Link to={pages.taskAdd + id}*/}
+                    {/*                  className="board-header__options-btn button button--primary">Редактировать</Link>*/}
+                    {/*            <button onClick={deleteTask}*/}
+                    {/*                    className="board-header__options-btn button button--error">Удалить*/}
+                    {/*            </button>*/}
+                    {/*        </>*/}
+                    {/*        }*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
 
                     <section className="board">
                         <BoardTaskOpen tasks={tasks} currentTask={currentTask} users={users}/>
